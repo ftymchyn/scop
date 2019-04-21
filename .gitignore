@@ -1,0 +1,15 @@
+scop
+.vscode/*
+*.d
+*.o
+*.obj
+*.ilk
+*.map
+*.exp
+*.gch
+*.pch
+*.lib
+*.a
+*.la
+*.lo
+*.so*
