@@ -12,8 +12,9 @@ SRCS        = main.c
 OBJS        = $(SRCS:.c=.o)
 
 INCLUDES    = -I $(HEADERS_DIR)
+LIBRARIES   = -lSDL2 -lGL
 
-TO_LINKING  = $(addprefix $(OBJS_DIR)/, $(OBJS)) $(INCLUDES)
+TO_LINKING  = $(addprefix $(OBJS_DIR)/, $(OBJS)) $(INCLUDES) $(LIBRARIES)
 
 VPATH       = $(SRCS_DIR) $(OBJS_DIR)
 
