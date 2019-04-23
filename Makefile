@@ -11,8 +11,12 @@ HEADERS    := $(addprefix $(HEADERS_DIR)/, $(HEADERS))
 SRCS        = main.c
 OBJS        = $(SRCS:.c=.o)
 
-INCLUDES    = -I $(HEADERS_DIR)
-LIBRARIES   = -lSDL2 -lGL -lGLEW
+LIBFT       = libft.a
+LIBFT_DIR   = ./libft
+LIBFT_INCL  = $(LIBFT_DIR)/includes/
+
+INCLUDES    = -I $(HEADERS_DIR) -I $(LIBFT_INCL)
+LIBRARIES   = -L. -lft -lSDL2 -lGL -lGLEW
 
 TO_LINKING  = $(addprefix $(OBJS_DIR)/, $(OBJS)) $(INCLUDES) $(LIBRARIES)
 
@@ -24,9 +28,13 @@ VPATH       = $(SRCS_DIR) $(OBJS_DIR)
 
 all         : $(NAME)
 
-$(NAME)     : $(OBJS_DIR) $(OBJS) $(HEADERS)
+$(NAME)     : $(LIBFT) $(OBJS_DIR) $(OBJS) $(HEADERS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(TO_LINKING)
 	@printf "\n\e[38;5;46m%-40s SUCCESSFUL BUILD 🖥\e[0m\n" ./$(NAME)
+
+$(LIBFT)    :
+	make -C $(LIBFT_DIR)
+	cp $(LIBFT_DIR)/$(LIBFT) .
 
 $(OBJS_DIR) :
 	mkdir $(OBJS_DIR)
@@ -39,6 +47,7 @@ clean       :
 	rm -rf $(OBJS_DIR)
 
 fclean      : clean
+	rm -f $(LIBFT)
 	rm -f $(NAME)
 
 re          : fclean all
