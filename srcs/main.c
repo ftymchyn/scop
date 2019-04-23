@@ -14,6 +14,24 @@ int	main(void)
 	assert(window);
 	SDL_GLContext *glcontext = SDL_GL_CreateContext(window);
 	assert(glcontext);
+	GLenum result = glewInit();
+	assert(result == GLEW_OK);
+	
+	float positions[6] = {
+		-0.5f, -0.5f,
+		 0.0f,  0.5f,
+		 0.5f, -0.5f
+	};
+
+	unsigned int buffer;
+
+	glGenBuffers(1, &buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6, positions, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+
 	while (running)
 	{
 		SDL_Event e;
@@ -26,14 +44,8 @@ int	main(void)
 				running = 0;
 			}
 		}
-
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		glBegin(GL_TRIANGLES);
-		glVertex2f(-0.5f, -0.5f);
-		glVertex2f(0.0f, 0.5f);
-		glVertex2f(0.5f, -0.5f);
-		glEnd();
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		SDL_GL_SwapWindow(window);
 	}
