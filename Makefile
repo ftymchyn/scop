@@ -9,6 +9,7 @@ OBJS_DIR    = ./objs
 HEADERS     = scop.h
 HEADERS    := $(addprefix $(HEADERS_DIR)/, $(HEADERS))
 SRCS        = main.c
+SRCS       += create_shader_program.c
 OBJS        = $(SRCS:.c=.o)
 
 LIBFT       = libft.a
@@ -20,7 +21,8 @@ LIBRARIES   = -L. -lft -lSDL2 -lGL -lGLEW
 
 TO_LINKING  = $(addprefix $(OBJS_DIR)/, $(OBJS)) $(INCLUDES) $(LIBRARIES)
 
-VPATH       = $(SRCS_DIR) $(OBJS_DIR)
+SUB_DIR     = opengl
+VPATH       = $(SRCS_DIR) $(addprefix $(SRCS_DIR)/, $(SUB_DIR)) $(OBJS_DIR)
 
 
 .PHONY: all clean fclean re

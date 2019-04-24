@@ -10,4 +10,6 @@
 # define WIN_WIDTH 1000
 # define WIN_HEIGHT 1000
 
+GLuint	create_shader_program(const char *vsfile, const char *fsfile);
+
 #endif
