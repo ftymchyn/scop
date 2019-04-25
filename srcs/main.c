@@ -17,11 +17,11 @@ int	main(void)
 	GLenum result = glewInit();
 	assert(result == GLEW_OK);
 	
-	GLfloat positions[] = {
-		-0.5f, -0.5f,
-		 0.5f, -0.5f,
-		 0.5f,  0.5f,
-		-0.5f,  0.5f
+	GLfloat buffer[] = {
+		-0.5f, -0.5f,  1.0f, 0.1f, 0.1f,
+		 0.5f, -0.5f,  0.1f, 1.0f, 0.1f,
+		 0.5f,  0.5f,  1.0f, 0.1f, 0.1f,
+		-0.5f,  0.5f,  0.1f, 0.1f, 1.0f
 	};
 
 	GLuint indices[] = {
@@ -36,10 +36,12 @@ int	main(void)
 	GLuint vbo;
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(buffer), buffer, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (GLvoid*)0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (GLvoid*)(sizeof(float) * 2));
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	GLuint ibo;
