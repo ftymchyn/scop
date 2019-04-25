@@ -42,7 +42,7 @@ int	main(void)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-	GLuint program = create_shader_program( "srcs/shaders/simple.vert", "srcs/shaders/simple.frag");
+	GLuint program = create_shader_program( "srcs/shaders/simple.shader");
 	glUseProgram(program);
 
 	while (running)

@@ -39,50 +39,54 @@ static int	print_link_error(GLuint program_id)
 	return (len);
 }
 
-static GLuint	create_shader(GLenum type, const char *filename)
+static GLuint	create_shader(GLenum type, const char *src)
 {
 	GLuint	result;
-	GLchar	*source;
+	char	*src_end;
+	int		len;
 
 	result = 0;
-	source = (GLchar*)read_file(filename);
-	if (source)
+	if (src)
 	{
+		src_end = ft_strstr(ft_strstr(src, "void main()"), "#version");
+		len = src_end - src;
 		result = glCreateShader(type);
-		glShaderSource(result, 1, (const GLchar**)&source, NULL);
+		glShaderSource(result, 1, (const GLchar**)&src, (src_end ? &len : NULL));
 		glCompileShader(result);
 		if (print_compile_error(result, type))
 		{
 			glDeleteShader(result);
 			result = 0;
 		}
-		free(source);
 	}
 	return (result);
 }
 
-GLuint	create_shader_program(const char *vsfile, const char *fsfile)
+GLuint	create_shader_program(const char *filename)
 {
 	GLuint	result;
-	GLuint	vertex;
-	GLuint	fragment;
+	char	*source;
+	GLuint	vert;
+	GLuint	frag;
 
 	result = 0;
-	vertex = create_shader(GL_VERTEX_SHADER, vsfile);
-	fragment = create_shader(GL_FRAGMENT_SHADER, fsfile);
-	if (vertex && fragment)
+	source = read_file(filename);
+	vert = create_shader(GL_VERTEX_SHADER, ft_strstr(source, "//VERTEX"));
+	frag = create_shader(GL_FRAGMENT_SHADER, ft_strstr(source, "//FRAGMENT"));
+	if (vert && frag)
 	{
 		result = glCreateProgram();
-		glAttachShader(result, vertex);
-		glAttachShader(result, fragment);
+		glAttachShader(result, vert);
+		glAttachShader(result, frag);
 		glLinkProgram(result);
 		if (print_link_error(result))
 		{
 			glDeleteProgram(result);
-			glDeleteShader(vertex);
-			glDeleteShader(fragment);
 			result = 0;
 		}
+		glDeleteShader(vert);
+		glDeleteShader(frag);
 	}
+	free(source);
 	return (result);
 }
