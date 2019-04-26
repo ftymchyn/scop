@@ -3,6 +3,13 @@
 int	main(void)
 {
 	int running = 1;
+
+	SDL_Init(SDL_INIT_VIDEO);
+
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+
 	SDL_Window *window = SDL_CreateWindow(
 		"scop",
 		SDL_WINDOWPOS_CENTERED,
@@ -16,7 +23,7 @@ int	main(void)
 	assert(glcontext);
 	GLenum result = glewInit();
 	assert(result == GLEW_OK);
-	
+
 	GLfloat buffer[] = {
 		-0.5f, -0.5f,  1.0f, 0.1f, 0.1f,
 		 0.5f, -0.5f,  0.1f, 1.0f, 0.1f,
