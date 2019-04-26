@@ -8,7 +8,7 @@ OBJS_DIR    = ./objs
 
 HEADERS     = scop.h typedefs.h
 HEADERS    := $(addprefix $(HEADERS_DIR)/, $(HEADERS))
-SRCS        = main.c gl_context.c
+SRCS        = main.c gl_context.c loop.c
 SRCS       += create_shader_program.c
 OBJS        = $(SRCS:.c=.o)
 

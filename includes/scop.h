@@ -12,4 +12,6 @@ void			create_context(t_scop *scop, int width, int height);
 void			destroy_context(t_scop *scop);
 GLuint			create_shader_program(const char *filename);
 
+void			loop(t_scop *scop);
+
 #endif
