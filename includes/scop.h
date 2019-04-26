@@ -6,10 +6,10 @@
 # include <GL/glew.h>
 
 # include "libft.h"
+# include "typedefs.h"
 
-# define WIN_WIDTH 1000
-# define WIN_HEIGHT 1000
-
-GLuint	create_shader_program(const char *filename);
+void			create_context(t_scop *scop, int width, int height);
+void			destroy_context(t_scop *scop);
+GLuint			create_shader_program(const char *filename);
 
 #endif

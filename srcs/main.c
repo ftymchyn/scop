@@ -2,27 +2,10 @@
 
 int	main(void)
 {
-	int running = 1;
+	t_scop	scop;
+	int		running = 1;
 
-	SDL_Init(SDL_INIT_VIDEO);
-
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
-
-	SDL_Window *window = SDL_CreateWindow(
-		"scop",
-		SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED,
-		WIN_WIDTH,
-		WIN_HEIGHT,
-		SDL_WINDOW_OPENGL
-	);
-	assert(window);
-	SDL_GLContext *glcontext = SDL_GL_CreateContext(window);
-	assert(glcontext);
-	GLenum result = glewInit();
-	assert(result == GLEW_OK);
+	create_context(&scop, 1000, 1000);
 
 	GLfloat buffer[] = {
 		-0.5f, -0.5f,  1.0f, 0.1f, 0.1f,
@@ -83,10 +66,8 @@ int	main(void)
 		glBindVertexArray(0);
 		glUseProgram(0);
 
-		SDL_GL_SwapWindow(window);
+		SDL_GL_SwapWindow(scop.window);
 	}
-
-	SDL_GL_DeleteContext(glcontext);
-	SDL_DestroyWindow(window);
+	destroy_context(&scop);
 	return (0);
 }
