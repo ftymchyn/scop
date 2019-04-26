@@ -3,6 +3,12 @@
 
 # include "scop.h"
 
+typedef enum		s_bool
+{
+	FALSE = 0,
+	TRUE
+}					t_bool;
+
 typedef struct		s_viewport
 {
 	unsigned int	width;
@@ -11,6 +17,7 @@ typedef struct		s_viewport
 
 typedef struct		s_scop
 {
+	t_bool			running;
 	SDL_Window		*window;
 	SDL_GLContext	*context;
 	t_viewport		viewport;
