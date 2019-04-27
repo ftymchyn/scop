@@ -2,8 +2,6 @@
 
 void	loop(t_scop *scop)
 {
-	SDL_Event e;
-
 	scop->running = TRUE;
 	GLfloat buffer[] = {
 		-0.5f, -0.5f,  1.0f, 0.1f, 0.1f,
@@ -38,15 +36,8 @@ void	loop(t_scop *scop)
 	GLuint program = create_shader_program( "srcs/shaders/simple.shader");
 
 	while (scop->running)
-	{ 
-		while (SDL_PollEvent(&e))
-		{
-			if (e.type == SDL_QUIT
-				|| (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE))
-			{
-				scop->running = FALSE;
-			}
-		}
+	{
+		SDL_PumpEvents();
 
 		glClear(GL_COLOR_BUFFER_BIT);
 

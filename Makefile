@@ -8,8 +8,8 @@ OBJS_DIR    = ./objs
 
 HEADERS     = scop.h typedefs.h
 HEADERS    := $(addprefix $(HEADERS_DIR)/, $(HEADERS))
-SRCS        = main.c gl_context.c loop.c
-SRCS       += create_shader_program.c
+SRCS        = main.c gl_context.c loop.c create_shader_program.c
+SRCS       += register_events handle_exit.c handle_keyboard.c
 OBJS        = $(SRCS:.c=.o)
 
 LIBFT       = libft.a
@@ -21,7 +21,7 @@ LIBRARIES   = -L. -lft -lSDL2 -lGL -lGLEW
 
 TO_LINKING  = $(addprefix $(OBJS_DIR)/, $(OBJS)) $(INCLUDES) $(LIBRARIES)
 
-SUB_DIR     = opengl
+SUB_DIR     = opengl events
 VPATH       = $(SRCS_DIR) $(addprefix $(SRCS_DIR)/, $(SUB_DIR)) $(OBJS_DIR)
 
 
