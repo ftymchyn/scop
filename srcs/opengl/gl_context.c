@@ -31,4 +31,5 @@ void	destroy_context(t_scop *scop)
 {
 	SDL_GL_DeleteContext(scop->context);
 	SDL_DestroyWindow(scop->window);
+	SDL_Quit();
 }
