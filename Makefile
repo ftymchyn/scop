@@ -10,6 +10,7 @@ HEADERS     = scop.h typedefs.h
 HEADERS    := $(addprefix $(HEADERS_DIR)/, $(HEADERS))
 SRCS        = main.c gl_context.c loop.c create_shader_program.c
 SRCS       += register_events.c handle_exit.c handle_keyboard.c
+SRCS       += handle_dropfile.c
 OBJS        = $(SRCS:.c=.o)
 
 LIBFT       = libft.a
