@@ -3,11 +3,22 @@
 
 # include "scop.h"
 
+typedef int			t_int3 __attribute__((ext_vector_type(3)));
+typedef GLfloat		t_float3 __attribute__((ext_vector_type(3)));
+
 typedef enum		s_bool
 {
 	FALSE = 0,
 	TRUE
 }					t_bool;
+
+typedef struct		s_obj
+{
+	t_vector		*v;
+	t_vector		*vn;
+	t_vector		*vt;
+	t_vector		*f;
+}					t_obj;
 
 typedef struct		s_viewport
 {
