@@ -8,6 +8,8 @@
 # include "libft.h"
 # include "typedefs.h"
 
+# define ERROR_LOG_SIZE 1024
+
 void			create_context(t_scop *scop, int width, int height);
 void			destroy_context(t_scop *scop);
 GLuint			create_shader_program(const char *filename);

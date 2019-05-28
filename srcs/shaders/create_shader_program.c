@@ -3,15 +3,14 @@
 static int	print_compile_error(GLuint shader_id, GLenum shader_type)
 {
 	GLint	compile_status;
-	GLchar	buffer[1024];
+	GLchar	buffer[ERROR_LOG_SIZE];
 	int		len;
 
 	len = 0;
 	glGetShaderiv(shader_id, GL_COMPILE_STATUS, &compile_status);
 	if (compile_status != GL_TRUE)
 	{
-		glGetShaderiv(shader_id, GL_INFO_LOG_LENGTH, &len);
-		glGetShaderInfoLog(shader_id, len, &len, buffer);
+		glGetShaderInfoLog(shader_id, ERROR_LOG_SIZE, &len, buffer);
 		ft_putstr_fd((shader_type == GL_VERTEX_SHADER ? "Vertex" : "Fragment"), 2);
 		ft_putendl_fd(" shader COMPILE ERROR :", 2);
 		ft_putendl_fd(buffer, 2);
@@ -23,15 +22,14 @@ static int	print_compile_error(GLuint shader_id, GLenum shader_type)
 static int	print_link_error(GLuint program_id)
 {
 	GLint	link_status;
-	GLchar	buffer[1024];
+	GLchar	buffer[ERROR_LOG_SIZE];
 	int		len;
 
 	len = 0;
 	glGetProgramiv(program_id, GL_LINK_STATUS, &link_status);
 	if (link_status != GL_TRUE)
 	{
-		glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &len);
-		glGetProgramInfoLog(program_id, len, &len, buffer);
+		glGetProgramInfoLog(program_id, ERROR_LOG_SIZE, &len, buffer);
 		ft_putendl_fd("Shader program LINK ERROR :", 2);
 		ft_putendl_fd(buffer, 2);
 		len++;
