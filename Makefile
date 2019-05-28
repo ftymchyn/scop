@@ -22,7 +22,7 @@ LIBRARIES   = -L. -lft -lSDL2 -lGL -lGLEW
 
 TO_LINKING  = $(addprefix $(OBJS_DIR)/, $(OBJS)) $(INCLUDES) $(LIBRARIES)
 
-SUB_DIR     = shaders events
+SUB_DIR     = shaders events scene
 VPATH       = $(SRCS_DIR) $(addprefix $(SRCS_DIR)/, $(SUB_DIR)) $(OBJS_DIR)
 
 
