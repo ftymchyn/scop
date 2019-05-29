@@ -14,10 +14,10 @@ typedef enum		s_bool
 
 typedef struct		s_obj
 {
-	t_vector		*v;
-	t_vector		*vn;
-	t_vector		*vt;
-	t_vector		*f;
+	t_darr			v;
+	t_darr			vn;
+	t_darr			vt;
+	t_darr			f;
 }					t_obj;
 
 typedef struct		s_viewport
