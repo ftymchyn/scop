@@ -9,9 +9,12 @@
 # include "typedefs.h"
 
 # define ERROR_LOG_SIZE 1024
+# define GL_CALL(gl_func) gl_skip_errors();gl_func;gl_check_errors(__FILE__, __LINE__)
 
 void			create_context(t_scop *scop, int width, int height);
 void			destroy_context(t_scop *scop);
+void			gl_skip_errors();
+void			gl_check_errors(char *file, int line);
 GLuint			create_shader_program(const char *filename);
 
 void			register_events(t_scop *scop);

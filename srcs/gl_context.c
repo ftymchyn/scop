@@ -33,3 +33,19 @@ void	destroy_context(t_scop *scop)
 	SDL_DestroyWindow(scop->window);
 	SDL_Quit();
 }
+
+void	gl_skip_errors()
+{
+	while(glGetError());
+}
+
+void	gl_check_errors(char *file, int line)
+{
+	GLenum error;
+
+	error = GL_NO_ERROR;
+	while((error = glGetError()))
+	{
+		ft_dprintf(2, "GL ERROR %x\nline: %d\nfile: %s\n", error, line, file);
+	}
+}
