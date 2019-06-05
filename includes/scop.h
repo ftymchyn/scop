@@ -21,6 +21,7 @@ int				handle_dropfile(void *scop, SDL_Event *e);
 
 void			loop(t_scop *scop);
 
-t_obj			parse_obj(const char *filename);
+t_obj			parse_obj(int fd);
+void			clear_obj(t_obj *obj);
 
 #endif

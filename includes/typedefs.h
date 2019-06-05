@@ -4,6 +4,7 @@
 # include "scop.h"
 
 typedef int			t_int3 __attribute__((ext_vector_type(3)));
+typedef GLfloat		t_float2 __attribute__((ext_vector_type(2)));
 typedef GLfloat		t_float3 __attribute__((ext_vector_type(3)));
 
 typedef enum		s_bool
@@ -20,18 +21,23 @@ typedef struct		s_obj
 	t_darr			f;
 }					t_obj;
 
-typedef struct		s_viewport
+typedef struct		s_camera
 {
 	unsigned int	width;
 	unsigned int	height;
-}					t_viewport;
+}					t_camera;
+
+typedef struct		s_scene
+{
+	t_camera		camera;
+}					t_scene;
 
 typedef struct		s_scop
 {
 	t_bool			running;
 	SDL_Window		*window;
 	SDL_GLContext	*context;
-	t_viewport		viewport;
+	t_scene			scene;
 }					t_scop;
 
 #endif

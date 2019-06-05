@@ -23,8 +23,8 @@ void	create_context(t_scop *scop, int width, int height)
 	assert(scop->context);
 	ret = glewInit();
 	assert(ret == GLEW_OK);
-	scop->viewport.width = width;
-	scop->viewport.height = height;
+	scop->scene.camera.width = width;
+	scop->scene.camera.height = height;
 }
 
 void	destroy_context(t_scop *scop)
