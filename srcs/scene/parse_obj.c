@@ -16,7 +16,7 @@ static void		parse_f(t_obj *obj, t_darr *strvec)
 	i = 1;
 	darr_init(&fdata, sizeof(t_int3));
 	str = NULL;
-	while (i < darr_size(strvec))
+	while (i < strvec->size)
 	{
 		str = *(char**)darr_at(strvec, i);
 		j = 0;
@@ -31,7 +31,7 @@ static void		parse_f(t_obj *obj, t_darr *strvec)
 		darr_pushback(&fdata, &vdata);
 		i++;
 	}
-	if (darr_size(&fdata) > 0)
+	if (fdata.size > 0)
 		darr_pushback(&obj->f, &fdata);
 }
 
@@ -40,11 +40,11 @@ static void	parse_vatrrib(t_obj *obj, char *type, t_darr *strvec)
 	t_float3	result;
 
 	result.xyz = 0.0f;
-	if (darr_size(strvec) >= 3)
+	if (strvec->size >= 3)
 	{
 		result.x = ft_atof(*(char**)darr_at(strvec, 1));
 		result.y = ft_atof(*(char**)darr_at(strvec, 2));
-		if (darr_size(strvec) >= 4)
+		if (strvec->size >= 4)
 			result.z = ft_atof(*(char**)darr_at(strvec, 3));
 	}
 	if (ft_strequ(type, "v"))
@@ -62,7 +62,7 @@ static void		parse_obj_line(const char *name, const char *line, t_obj *obj)
 
 	strvec = ft_strsplit_vec(line, ' ');
 	type = NULL;
-	if (darr_size(&strvec) > 0)
+	if (strvec.size > 0)
 	{
 		type = *(char**)darr_at(&strvec, 0);
 		if (ft_strequ(type, "f"))
@@ -74,10 +74,10 @@ static void		parse_obj_line(const char *name, const char *line, t_obj *obj)
 		2,
 		"\r -load object \"%s\" -> V[%d] VN[%d] VT[%d] FACES[%d] ",
 		name,
-		darr_size(&obj->v),
-		darr_size(&obj->vn),
-		darr_size(&obj->vt),
-		darr_size(&obj->f)
+		obj->v.size,
+		obj->vn.size,
+		obj->vt.size,
+		obj->f.size
 	);
 	darr_clear(&strvec, &clear_str);
 }
@@ -98,7 +98,7 @@ t_obj			parse_obj(int fd)
 		{
 			ft_memdel((void**)&obj_name);
 			obj_name = ft_strjoin(line + 2, NULL);
-			if (darr_size(&result.f) > 0)
+			if (result.f.size > 0)
 				break ;
 		}
 		else
