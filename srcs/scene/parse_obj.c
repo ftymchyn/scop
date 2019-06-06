@@ -31,8 +31,8 @@ static void		parse_f(t_obj *obj, t_darr *strvec)
 		darr_pushback(&fdata, &vdata);
 		i++;
 	}
-	if (fdata.size > 0)
-		darr_pushback(&obj->f, &fdata);
+	if (fdata.size > 0 && ++obj->faces_num)
+		darr_pushback(&obj->gr.faces, &fdata);
 }
 
 static void	parse_vatrrib(t_obj *obj, char *type, t_darr *strvec)
@@ -77,7 +77,7 @@ static void		parse_obj_line(const char *name, const char *line, t_obj *obj)
 		obj->v.size,
 		obj->vn.size,
 		obj->vt.size,
-		obj->f.size
+		obj->faces_num
 	);
 	darr_clear(&strvec, &clear_str);
 }
@@ -88,23 +88,27 @@ t_obj			parse_obj(int fd)
 	static char	*line = NULL;
 	t_obj		result;
 
+	ft_bzero(&result, sizeof(t_obj));
 	darr_init(&result.v, sizeof(t_float3));
 	darr_init(&result.vn, sizeof(t_float3));
 	darr_init(&result.vt, sizeof(t_float2));
-	darr_init(&result.f, sizeof(t_darr));
+	darr_init(&result.fgroups, sizeof(t_facegr));
+	darr_init(&result.gr.faces, sizeof(t_darr));
+	result.faces_num = 0;
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (line[0] == 'o')
 		{
 			ft_memdel((void**)&obj_name);
 			obj_name = ft_strjoin(line + 2, NULL);
-			if (result.f.size > 0)
+			if (result.v.size > 0)
 				break ;
 		}
 		else
 			parse_obj_line(obj_name, line, &result);
 		ft_memdel((void**)&line);
 	}
+	darr_pushback(&result.fgroups, &result.gr);
 	ft_dprintf(2, "DONE\n");
 	ft_memdel((void**)&line);
 	return (result);

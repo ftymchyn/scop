@@ -24,6 +24,8 @@ int				handle_dropfile(void *scop, SDL_Event *e);
 
 void			loop(t_scop *scop);
 
+t_darr			load_models(const char *filename);
+void			clear_models(t_darr *models);
 t_obj			parse_obj(int fd);
 void			clear_obj(t_obj *obj);
 

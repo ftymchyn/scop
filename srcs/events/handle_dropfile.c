@@ -1,13 +1,5 @@
 #include "scop.h"
 
-static void		clear_face(void *data)
-{
-	t_darr	*darr;
-
-	darr = (t_darr*)data;
-	darr_clear(darr, NULL);
-}
-
 int	handle_dropfile(void *scop, SDL_Event *e)
 {
 	if (scop && e)
@@ -16,12 +8,8 @@ int	handle_dropfile(void *scop, SDL_Event *e)
 		{
 			if (ft_strequ(ft_strrchr(e->drop.file, '.'), ".obj"))
 			{
-				t_obj o = parse_obj(e->drop.file);
-
-				darr_clear( &o.v, NULL );
-				darr_clear( &o.vn, NULL );
-				darr_clear( &o.vt, NULL );
-				darr_clear( &o.f, &clear_face );
+				t_darr models = load_models(e->drop.file);
+				clear_models(&models);
 			}
 			else
 				ft_putendl("Can parse only *.obj");
