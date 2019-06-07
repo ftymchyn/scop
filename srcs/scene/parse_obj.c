@@ -72,7 +72,7 @@ static void		parse_obj_line(const char *name, const char *line, t_obj *obj)
 	}
 	ft_dprintf(
 		2,
-		"\r -load object \"%s\" -> V[%d] VN[%d] VT[%d] FACES[%d] ",
+		"\r -load object \"%s\" -> v[%d] vn[%d] vt[%d] faces[%d] ",
 		name,
 		obj->v.size,
 		obj->vn.size,
