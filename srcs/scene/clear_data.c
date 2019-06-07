@@ -27,7 +27,15 @@ static void	clear_mesh(void *data)
 	}
 }
 
-void	clear_models(t_darr *models)
+static void	clear_face(void *data)
+{
+	t_darr	*darr;
+
+	darr = (t_darr*)data;
+	darr_clear(darr, NULL);
+}
+
+void		clear_models(t_darr *models)
 {
 	t_model	*model;
 	size_t	i;
@@ -41,4 +49,25 @@ void	clear_models(t_darr *models)
 		i++;
 	}
 	darr_clear(models, NULL);
+}
+
+void		clear_obj(t_obj *obj)
+{
+	t_facegr	*facegr;
+	size_t		i;
+
+	if (obj)
+	{
+		darr_clear( &obj->v, NULL );
+		darr_clear( &obj->vn, NULL );
+		darr_clear( &obj->vt, NULL );
+		i = 0;
+		while (i < obj->fgroups.size )
+		{
+			facegr = (t_facegr*)darr_at(&obj->fgroups, i);
+			darr_clear(&facegr->faces, &clear_face);
+			i++;
+		}
+		darr_clear(&obj->fgroups, NULL);
+	}
 }

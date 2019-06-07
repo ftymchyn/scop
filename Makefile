@@ -9,8 +9,8 @@ OBJS_DIR    = ./objs
 HEADERS     = scop.h typedefs.h
 HEADERS    := $(addprefix $(HEADERS_DIR)/, $(HEADERS))
 SRCS        = main.c gl_context.c loop.c create_shader_program.c
-SRCS       += register_events.c handle_exit.c handle_keyboard.c
-SRCS       += handle_dropfile.c load_models.c clear_models.c parse_obj.c clear_obj.c
+SRCS       += register_events.c handle_exit.c handle_keyboard.c parse_obj.c
+SRCS       += handle_dropfile.c init_data.c clear_data.c load_models.c
 OBJS        = $(SRCS:.c=.o)
 
 LIBFT       = libft.a

@@ -88,13 +88,7 @@ t_obj			parse_obj(int fd)
 	static char	*line = NULL;
 	t_obj		result;
 
-	ft_bzero(&result, sizeof(t_obj));
-	darr_init(&result.v, sizeof(t_float3));
-	darr_init(&result.vn, sizeof(t_float3));
-	darr_init(&result.vt, sizeof(t_float2));
-	darr_init(&result.fgroups, sizeof(t_facegr));
-	darr_init(&result.gr.faces, sizeof(t_darr));
-	result.faces_num = 0;
+	init_obj(&result);
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (line[0] == 'o')
