@@ -9,9 +9,7 @@ out vec3 frag_color;
 
 void main()
 {
-	float intensity = dot(a_normal, vec3(0.0, 0.0, 1.0));
-	if (intensity < 0.0)
-		intensity = 0.0;
+	float intensity = max(dot(a_normal, vec3(0.0, 0.0, -1.0)),0.0);
 	frag_color = vec3(1.0) * intensity;
 	gl_Position = vec4(a_position, 1.0);
 }
