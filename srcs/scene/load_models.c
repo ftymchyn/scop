@@ -28,6 +28,7 @@ static void		generate_buffers(t_mesh *mesh)
 	GL_CALL(glEnableVertexAttribArray(2));
 	GL_CALL(glVertexAttribPointer(
 		2, 2, GL_FLOAT, GL_FALSE, sizeof(t_float2), 0));
+	GL_CALL(glBindVertexArray(0));
 }
 
 static void		push_data(t_mesh *mesh, t_obj *obj, t_int3 **vidxs)
@@ -41,8 +42,8 @@ static void		push_data(t_mesh *mesh, t_obj *obj, t_int3 **vidxs)
 	while (++i < 3)
 	{
 		v[i] = (t_float3*)darr_at(obj->buffers[0], vidxs[i]->x);
-		vn[i] = (t_float3*)darr_at(obj->buffers[1], vidxs[i]->y);
-		vt[i] = (t_float3*)darr_at(obj->buffers[2], vidxs[i]->z);
+		vn[i] = (t_float3*)darr_at(obj->buffers[1], vidxs[i]->z);
+		vt[i] = (t_float3*)darr_at(obj->buffers[2], vidxs[i]->y);
 	}
 	i = -1;
 	while (++i < 3)
