@@ -24,6 +24,7 @@ typedef struct		s_obj
 	t_darr			v;
 	t_darr			vn;
 	t_darr			vt;
+	t_darr			*buffers[3];
 	t_darr			fgroups;
 	t_facegr		gr;
 	size_t			faces_num;
