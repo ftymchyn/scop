@@ -19,12 +19,12 @@ static void		parse_f(t_obj *obj, t_darr *strvec)
 	while (i < strvec->size)
 	{
 		str = *(char**)darr_at(strvec, i);
-		j = 0;
-		while (j < 3)
+		vdata.xyz = 0;
+		j = -1;
+		while (++j < 3)
 		{
 			vdata[j] = ft_atoi(str);
 			str = ft_strchr(str, '/') + 1;
-			j++;
 			if (str == (char*)1)
 				break ;
 		}
@@ -74,9 +74,9 @@ static void		parse_obj_line(const char *name, const char *line, t_obj *obj)
 		2,
 		"\r -load object \"%s\" -> v[%d] vn[%d] vt[%d] faces[%d] ",
 		name,
-		obj->v.size,
-		obj->vn.size,
-		obj->vt.size,
+		obj->v.size - 1,
+		obj->vn.size - 1,
+		obj->vt.size - 1,
 		obj->faces_num
 	);
 	darr_clear(&strvec, &clear_str);
@@ -95,7 +95,7 @@ t_obj			parse_obj(int fd)
 		{
 			ft_memdel((void**)&obj_name);
 			obj_name = ft_strjoin(line + 2, NULL);
-			if (result.v.size > 0)
+			if (result.v.size > 1)
 				break ;
 		}
 		else

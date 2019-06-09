@@ -2,14 +2,23 @@
 
 void	init_obj(t_obj *obj)
 {
+	t_float3 tmp;
+
+	tmp.xyz = 0.0f;
 	if (obj)
 	{
 		ft_bzero(obj, sizeof(t_obj));
 		darr_init(&obj->v, sizeof(t_float3));
 		darr_init(&obj->vn, sizeof(t_float3));
-		darr_init(&obj->vt, sizeof(t_float2));
+		darr_init(&obj->vt, sizeof(t_float3));
+		darr_pushback(&obj->v, &tmp);
+		darr_pushback(&obj->vn, &tmp);
+		darr_pushback(&obj->vt, &tmp);
 		darr_init(&obj->fgroups, sizeof(t_facegr));
 		darr_init(&obj->gr.faces, sizeof(t_darr));
+		obj->buffers[0] = &obj->v;
+		obj->buffers[1] = &obj->vn;
+		obj->buffers[2] = &obj->vt;
 	}
 }
 
