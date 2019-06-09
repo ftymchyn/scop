@@ -32,4 +32,6 @@ void	init_obj(t_obj *obj);
 t_obj	parse_obj(int fd);
 void	clear_obj(t_obj *obj);
 
+void	generate_buffers(t_mesh *mesh);
+
 #endif
