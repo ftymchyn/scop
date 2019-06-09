@@ -10,10 +10,12 @@ static void		push_data(t_mesh *mesh, t_obj *obj, t_int3 **vidxs)
 	i = -1;
 	while (++i < 3)
 	{
-		v[i] = (t_float3*)darr_at(obj->buffers[0], vidxs[i]->x);
-		vn[i] = (t_float3*)darr_at(obj->buffers[1], vidxs[i]->z);
-		vt[i] = (t_float3*)darr_at(obj->buffers[2], vidxs[i]->y);
+		v[i] = (t_float3*)darr_at(&obj->v, vidxs[i]->x);
+		vn[i] = (t_float3*)darr_at(&obj->vn, vidxs[i]->z);
+		vt[i] = (t_float3*)darr_at(&obj->vt, vidxs[i]->y);
 	}
+	if (!vidxs[0]->z || !vidxs[1]->z || !vidxs[2]->z)
+		generate_normals(v, vn);
 	i = -1;
 	while (++i < 3)
 	{
@@ -26,22 +28,22 @@ static void		push_data(t_mesh *mesh, t_obj *obj, t_int3 **vidxs)
 static void		correct_face_indexes(t_obj *obj, t_int3 **vidxs)
 {
 	size_t	i;
-	size_t	k;
-	t_int3	*vidx;
 
 	i = 0;
 	while (i < 3)
 	{
-		vidx = vidxs[i];
-		k = 0;
-		while (k < 3)
-		{
-			if ((size_t)ABS((*vidx)[k]) >= obj->buffers[k]->size)
-				(*vidx)[k] = 0;
-			else if ((*vidx)[k] < 0)
-				(*vidx)[k] = obj->buffers[k]->size - (*vidx)[k];
-			k++;
-		}
+		if ((size_t)ABS(vidxs[i]->x) >= obj->v.size)
+			vidxs[i]->x = 0;
+		else if (vidxs[i]->x < 0)
+			vidxs[i]->x = obj->v.size - vidxs[i]->x;
+		if ((size_t)ABS(vidxs[i]->y) >= obj->vt.size)
+			vidxs[i]->y = 0;
+		else if (vidxs[i]->y < 0)
+			vidxs[i]->y = obj->vt.size - vidxs[i]->y;
+		if ((size_t)ABS(vidxs[i]->z) >= obj->vn.size)
+			vidxs[i]->z = 0;
+		else if (vidxs[i]->z < 0)
+			vidxs[i]->z = obj->vn.size - vidxs[i]->z;
 		i++;
 	}
 }
@@ -104,8 +106,8 @@ t_darr			load_models(const char *filename)
 	fd = open(filename, O_RDONLY);
 	if ( fd != -1)
 	{
-		ft_printf( "Read file \"%s\" :\n" );
-		obj = parse_obj( fd );
+		ft_printf("Read file \"%s\" :\n");
+		parse_obj(fd, &obj);
 		while (obj.v.size > 1)
 		{
 			model = create_model_from_obj(obj);

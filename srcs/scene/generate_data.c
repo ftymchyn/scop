@@ -30,3 +30,14 @@ void	generate_buffers(t_mesh *mesh)
 		2, 2, GL_FLOAT, GL_FALSE, sizeof(t_float2), 0));
 	GL_CALL(glBindVertexArray(0));
 }
+
+void	generate_normals(t_float3 **v, t_float3 **vn)
+{
+	t_float3 normal;
+
+	normal = cross3f((*v[1] - *v[0]), (*v[2] - *v[0]));
+	normal = norm3f(normal);
+	vn[0]->xyz = normal;
+	vn[1]->xyz = normal;
+	vn[2]->xyz = normal;
+}

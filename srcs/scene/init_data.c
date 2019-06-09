@@ -16,9 +16,6 @@ void	init_obj(t_obj *obj)
 		darr_pushback(&obj->vt, &tmp);
 		darr_init(&obj->fgroups, sizeof(t_facegr));
 		darr_init(&obj->gr.faces, sizeof(t_darr));
-		obj->buffers[0] = &obj->v;
-		obj->buffers[1] = &obj->vn;
-		obj->buffers[2] = &obj->vt;
 	}
 }
 
