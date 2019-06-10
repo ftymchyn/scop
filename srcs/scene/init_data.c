@@ -2,20 +2,17 @@
 
 void	init_obj(t_obj *obj)
 {
-	t_float3 tmp;
-
-	tmp.xyz = 0.0f;
 	if (obj)
 	{
 		ft_bzero(obj, sizeof(t_obj));
 		darr_init(&obj->v, sizeof(t_float3));
 		darr_init(&obj->vn, sizeof(t_float3));
 		darr_init(&obj->vt, sizeof(t_float3));
-		darr_pushback(&obj->v, &tmp);
-		darr_pushback(&obj->vn, &tmp);
-		darr_pushback(&obj->vt, &tmp);
-		darr_init(&obj->fgroups, sizeof(t_facegr));
-		darr_init(&obj->gr.faces, sizeof(t_darr));
+		darr_create_last(&obj->v);
+		darr_create_last(&obj->vn);
+		darr_create_last(&obj->vt);
+		darr_init(&obj->mtls, sizeof(t_mtl));
+		darr_init(&obj->objects, sizeof(t_object));
 	}
 }
 

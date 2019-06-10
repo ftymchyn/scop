@@ -28,8 +28,10 @@ t_darr		load_models(const char *filename);
 void		init_model(t_model *model);
 void		clear_models(t_darr *models);
 void		init_mesh(t_mesh *mesh);
+
 void		init_obj(t_obj *obj);
-t_obj		parse_obj(int fd);
+void		parse_mtl(t_obj *obj, char *root, char *filename);
+void		parse_obj_fd(int fd, t_obj *o, char *root);
 void		clear_obj(t_obj *obj);
 
 void		generate_buffers(t_mesh *mesh);

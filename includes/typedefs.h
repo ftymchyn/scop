@@ -13,21 +13,39 @@ typedef enum		s_bool
 	TRUE
 }					t_bool;
 
-typedef struct		s_facegr
+typedef struct		s_mtl
 {
-	//t_mtl			*mtl;
-	t_darr			faces;
-}					t_facegr;
+	t_float3		ka;
+	t_float3		kd;
+	t_float3		ks;
+	float			ns;
+	char			*fmap_kd;
+	char			*fmap_ks;
+	char			*fmap_bump;
+}					t_mtl;
 
 typedef struct		s_obj
 {
 	t_darr			v;
 	t_darr			vn;
 	t_darr			vt;
-	t_darr			fgroups;
-	t_facegr		gr;
-	size_t			faces_num;
+	t_darr			mtls;
+	t_darr			objects;
+	float			min_dist;
 }					t_obj;
+
+typedef struct		s_object
+{
+	t_obj			*data;
+	t_darr			groups;
+}					t_object;
+
+typedef struct		s_group
+{
+	t_object		*owner;
+	char			*name;
+	t_darr			faces;
+}					t_group;
 
 typedef struct		s_material
 {

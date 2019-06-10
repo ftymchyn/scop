@@ -53,21 +53,30 @@ void		clear_models(t_darr *models)
 
 void		clear_obj(t_obj *obj)
 {
-	t_facegr	*facegr;
+	t_object	*object;
+	t_group		*group;
 	size_t		i;
+	size_t		k;
 
 	if (obj)
 	{
-		darr_clear( &obj->v, NULL );
-		darr_clear( &obj->vn, NULL );
-		darr_clear( &obj->vt, NULL );
-		i = 0;
-		while (i < obj->fgroups.size )
+		i = -1;
+		while (++i < obj->objects.size )
 		{
-			facegr = (t_facegr*)darr_at(&obj->fgroups, i);
-			darr_clear(&facegr->faces, &clear_face);
-			i++;
+			object = (t_object*)darr_at(&obj->objects, i);
+			k = -1;
+			while (++k < object->groups.size)
+			{
+				group = (t_group*)darr_at(&object->groups, k);
+				darr_clear(&group->faces, &clear_face);
+				free(group->name);
+			}
+			darr_clear(&object->groups, NULL);
 		}
-		darr_clear(&obj->fgroups, NULL);
+		darr_clear(&obj->mtls, NULL);
+		darr_clear(&obj->objects, NULL);
+		darr_clear(&obj->v, NULL);
+		darr_clear(&obj->vn, NULL);
+		darr_clear(&obj->vt, NULL);
 	}
 }
