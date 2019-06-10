@@ -41,12 +41,12 @@ static void		parse_vertex_attrib(t_darr *buffer, char *data, float *dist)
 
 	vec3 = (t_float3*)darr_create_last(buffer);
 	i = 0;
-	while (i < 3 && data)
+	while (i < 3 && (size_t)data > 1)
 	{
 		(*vec3)[i] = ft_atof(data);
 		num = (*vec3)[i];
 		*dist = MAX(*dist, num);
-		data = ft_strchr(data, ' ');
+		data = ft_strchr(data, ' ') + 1;
 		i++;
 	}
 }
