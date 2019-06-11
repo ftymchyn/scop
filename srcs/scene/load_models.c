@@ -106,7 +106,7 @@ t_darr			load_models(const char *filename)
 	fd = open(filename, O_RDONLY);
 	if ( fd != -1)
 	{
-		ft_printf("Load models from file \"%s\" :\n");
+		ft_printf("\nLoad models from file \"%s\" :\n");
 		root = ft_strsub(filename, 0, ft_strrchr(filename, '/') - filename);
 		init_obj(&obj);
 		parse_obj_fd(fd, &obj, root);
