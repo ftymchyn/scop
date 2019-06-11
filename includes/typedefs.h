@@ -13,6 +13,11 @@ typedef enum		s_bool
 	TRUE
 }					t_bool;
 
+typedef	struct		s_mat4
+{
+	float			d[16];
+}					t_mat4;
+
 typedef struct		s_mtl
 {
 	t_float3		ka;
@@ -76,12 +81,19 @@ typedef struct		s_camera
 {
 	unsigned int	width;
 	unsigned int	height;
+	float			fov;
+	float			ar;
+	t_float3		pos;
 }					t_camera;
 
 typedef struct		s_scene
 {
 	t_camera		camera;
 	t_darr			models;
+	GLuint			model_shader;
+	t_mat4			m_model;
+	t_mat4			m_view;
+	t_mat4			m_proj;
 }					t_scene;
 
 typedef struct		s_scop

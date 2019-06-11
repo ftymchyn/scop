@@ -21,15 +21,16 @@ static void	render_model(void *data)
 void		loop(t_scop *scop)
 {
 	scop->running = TRUE;
-	GLuint program = create_shader_program( "srcs/shaders/model.glsl");
 
+	GL_CALL(glEnable(GL_DEPTH_TEST));
+	GL_CALL(glEnable(GL_MULTISAMPLE));
 	while (scop->running)
 	{
 		SDL_PumpEvents();
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glUseProgram(program);
+		GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+		GL_CALL(glUseProgram(scop->scene.model_shader));
 		darr_foreach(&scop->scene.models, &render_model);
-		glUseProgram(0);
+		GL_CALL(glUseProgram(0));
 		SDL_GL_SwapWindow(scop->window);
 	}
 	clear_models(&scop->scene.models);

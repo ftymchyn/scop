@@ -1,6 +1,6 @@
 #include "scop.h"
 
-static void	gl_setup()
+static void	gl_attrib_setup()
 {
 	SDL_GL_SetSwapInterval(1);
 	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
@@ -20,7 +20,7 @@ void	create_context(t_scop *scop, int width, int height)
 	ft_bzero(scop, sizeof(t_scop));
 	ret = SDL_Init(SDL_INIT_VIDEO);
 	assert(ret == 0);
-	gl_setup();
+	gl_attrib_setup();
 	scop->window = SDL_CreateWindow(
 		"scop",
 		SDL_WINDOWPOS_CENTERED,
@@ -34,10 +34,8 @@ void	create_context(t_scop *scop, int width, int height)
 	assert(scop->context);
 	ret = glewInit();
 	assert(ret == GLEW_OK);
-	scop->scene.camera.width = width;
-	scop->scene.camera.height = height;
-	GL_CALL(glEnable(GL_DEPTH_TEST));
-	GL_CALL(glEnable(GL_MULTISAMPLE));
+	init_camera(&scop->scene.camera, width, height);
+	init_scene(&scop->scene);
 }
 
 void	destroy_context(t_scop *scop)

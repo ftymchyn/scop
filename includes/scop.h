@@ -22,6 +22,8 @@ int			handle_exit(void *scop, SDL_Event *e);
 int			handle_keyboard(void *scop, SDL_Event *e);
 int			handle_dropfile(void *scop, SDL_Event *e);
 
+void		init_camera(t_camera *cam, float width, float height);
+void		init_scene(t_scene *scene);
 void		loop(t_scop *scop);
 
 t_darr		load_models(const char *filename);
@@ -40,5 +42,7 @@ void		generate_normals(t_float3 **v, t_float3 **vn);
 t_float3	cross3f(t_float3 v1, t_float3 v2);
 t_float3	norm3f(t_float3 v);
 float		dot3f(t_float3 v1, t_float3 v2);
+
+void		m_identity(t_mat4 *mat4);
 
 #endif
