@@ -4,7 +4,7 @@ int	main(void)
 {
 	t_scop	scop;
 
-	create_context(&scop, 1000, 1000);
+	create_context(&scop, 1280, 720);
 	register_events(&scop);
 	loop(&scop);
 	destroy_context(&scop);
