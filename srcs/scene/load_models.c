@@ -94,7 +94,7 @@ static void	create_model(t_model *m, t_object *o, char *root)
 	}
 }
 
-t_darr			load_models(const char *filename)
+t_darr			load_models(const char *filename, float *min_dist)
 {
 	t_darr	result;
 	t_obj	obj;
@@ -118,6 +118,7 @@ t_darr			load_models(const char *filename)
 				darr_create_last(&result), darr_at(&obj.objects, i), root
 			);
 		}
+		*min_dist = obj.min_dist;
 		clear_obj(&obj);
 		free(root);
 	}

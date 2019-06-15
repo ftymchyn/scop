@@ -3,7 +3,7 @@
 void		loop(t_scop *scop)
 {
 	scop->running = TRUE;
-	scop->scene.m_view = m_lookat((t_float3)(0),&scop->scene.camera);
+	scop->scene.m_view = m_view(&scop->scene.camera);
 	scop->scene.m_proj = m_projection(&scop->scene.camera);
 	GL_CALL(glEnable(GL_DEPTH_TEST));
 	GL_CALL(glEnable(GL_MULTISAMPLE));
