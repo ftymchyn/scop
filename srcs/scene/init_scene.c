@@ -10,9 +10,9 @@ void	init_camera(t_camera *cam, float width, float height)
 	cam->width = width;
 	cam->height = height;
 	cam->pos = (t_float3){ 0.0f, 0.0f, 3.0f };
-	cam->near = 0.1f;
+	cam->near = 1.0f;
 	cam->far = 100.0f;
-	cam->rt_point.y = tanf(fov_y * 0.5 * 3.14159 / 180) * cam->near;
+	cam->rt_point.y = tanf(fov_y * 0.5 * 3.14159f / 180.0f) * cam->near;
 	cam->rt_point.x = cam->rt_point.y * aspect;
 }
 
