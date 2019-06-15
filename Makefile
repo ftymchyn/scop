@@ -13,6 +13,7 @@ SRCS       += register_events.c handle_exit.c handle_keyboard.c parse_obj_fd.c
 SRCS       += handle_dropfile.c init_data.c clear_data.c load_models.c
 SRCS       += generate_data.c cross.c norm.c dot.c parse_mtl.c init_scene.c
 SRCS       += m_identity.c m_transpose.c m_lookat.c m_projection.c m_mult.c
+SRCS       += render_scene.c render_model.c
 OBJS        = $(SRCS:.c=.o)
 
 LIBFT       = libft.a
@@ -24,7 +25,7 @@ LIBRARIES   = -L. -lft -lSDL2 -lGL -lGLEW
 
 TO_LINKING  = $(addprefix $(OBJS_DIR)/, $(OBJS)) $(INCLUDES) $(LIBRARIES)
 
-SUB_DIR     = shaders events scene math
+SUB_DIR     = shaders events scene math render
 VPATH       = $(SRCS_DIR) $(addprefix $(SRCS_DIR)/, $(SUB_DIR)) $(OBJS_DIR)
 
 

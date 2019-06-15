@@ -26,6 +26,9 @@ void		init_camera(t_camera *cam, float width, float height);
 void		init_scene(t_scene *scene);
 void		loop(t_scop *scop);
 
+void		render_scene(t_scene *s);
+void		render_model(t_darr *models);
+
 t_darr		load_models(const char *filename);
 void		init_model(t_model *model);
 void		clear_models(t_darr *models);
