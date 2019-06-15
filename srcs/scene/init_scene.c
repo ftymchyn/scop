@@ -5,7 +5,7 @@ void	init_camera(t_camera *cam, float width, float height)
 	float	fov_y;
 	float	aspect;
 
-	fov_y = 45.0f;
+	fov_y = 70.0f;
 	aspect = width / height;
 	cam->width = width;
 	cam->height = height;
