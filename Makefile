@@ -11,8 +11,8 @@ HEADERS    := $(addprefix $(HEADERS_DIR)/, $(HEADERS))
 SRCS        = main.c gl_context.c loop.c create_shader_program.c
 SRCS       += register_events.c handle_exit.c handle_keyboard.c parse_obj_fd.c
 SRCS       += handle_dropfile.c init_data.c clear_data.c load_models.c
-SRCS       += generate_data.c cross.c norm.c dot.c parse_mtl.c m_identity.c
-SRCS       += init_scene.c
+SRCS       += generate_data.c cross.c norm.c dot.c parse_mtl.c init_scene.c
+SRCS       += m_identity.c m_transpose.c m_lookat.c m_projection.c m_mult.c
 OBJS        = $(SRCS:.c=.o)
 
 LIBFT       = libft.a

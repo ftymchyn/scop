@@ -44,5 +44,9 @@ t_float3	norm3f(t_float3 v);
 float		dot3f(t_float3 v1, t_float3 v2);
 
 void		m_identity(t_mat4 *mat4);
+t_mat4		m_transpose(t_mat4 m);
+t_mat4		m_lookat(t_float3 pos, t_camera *cam);
+t_mat4		m_projection(t_camera *c);
+t_mat4		m_mult(t_mat4 *m1, t_mat4 *m2);
 
 #endif

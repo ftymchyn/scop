@@ -81,8 +81,9 @@ typedef struct		s_camera
 {
 	unsigned int	width;
 	unsigned int	height;
-	float			fov;
-	float			ar;
+	float			near;
+	float			far;
+	t_float2		rt_point;
 	t_float3		pos;
 }					t_camera;
 
