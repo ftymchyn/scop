@@ -13,7 +13,8 @@ uniform mat4 proj;
 
 void main()
 {
-	float intensity = max(dot(a_normal, vec3(0.0, 0.0, 1.0)),0.0);
+	vec4 normal = transpose(inverse(model)) * vec4(a_normal, 0.0f);
+	float intensity = max(dot(normal, vec4(0.0, 0.0, 1.0, 0.0f)),0.0);
 	frag_color = vec3(0.7) * intensity;
 	gl_Position = proj * view * model * vec4(a_position, 1.0);
 }
