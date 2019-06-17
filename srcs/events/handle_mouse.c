@@ -3,17 +3,28 @@
 int	handle_mouse(void *scop, SDL_Event *e)
 {
 	static t_bool	is_lbtn_pressed = FALSE;
+	static t_int2	lmpos = (t_int2)(0);
+	t_int2			mpos;
+	t_scop			*s;
+	t_float4		rquat;
 
 	if (scop && e)
 	{
-		if (e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP)
+		s = (t_scop*)scop;
+		if (e->button.button == SDL_BUTTON_LEFT
+		&& (e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP))
 		{
-			if (e->button.button == SDL_BUTTON_LEFT)
-				is_lbtn_pressed = !is_lbtn_pressed;
+			is_lbtn_pressed = !is_lbtn_pressed;
+			if (is_lbtn_pressed)
+				lmpos = (t_int2){e->button.x, e->button.y};
 		}
 		else if (e->type == SDL_MOUSEMOTION && is_lbtn_pressed)
 		{
-			ft_printf("x %d, y %d\n", e->motion.x, e->motion.y);
+			mpos = (t_int2){e->motion.x, e->motion.y};
+			rquat = trackball_rotate(&s->scene.camera, lmpos, mpos);
+			lmpos = mpos;
+			s->scene.q_rotation = q_mult(s->scene.q_rotation, rquat);
+			s->scene.m_model = m_rotmatrix_quat(s->scene.q_rotation);
 		}
 	}
 	return (1);

@@ -22,4 +22,5 @@ void	init_scene(t_scene *scene)
 	m_identity(&scene->m_model);
 	m_identity(&scene->m_view);
 	m_identity(&scene->m_proj);
+	scene->q_rotation.w = 1.0f;
 }
