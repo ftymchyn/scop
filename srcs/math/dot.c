@@ -14,3 +14,18 @@ float	dot3f(t_float3 v1, t_float3 v2)
 	}
 	return (result);
 }
+
+float	dot4f(t_float4 v1, t_float4 v2)
+{
+	float	result;
+	int			i;
+
+	i = 0;
+	result = 0.0f;
+	while (i < 4)
+	{
+		result += v1[i] * v2[i];
+		i++;
+	}
+	return (result);
+}
