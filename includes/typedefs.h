@@ -3,9 +3,11 @@
 
 # include "scop.h"
 
+typedef int			t_int2 __attribute__((ext_vector_type(2)));
 typedef int			t_int3 __attribute__((ext_vector_type(3)));
 typedef GLfloat		t_float2 __attribute__((ext_vector_type(2)));
 typedef GLfloat		t_float3 __attribute__((ext_vector_type(3)));
+typedef GLfloat		t_float4 __attribute__((ext_vector_type(4)));
 
 typedef enum		s_bool
 {
@@ -92,6 +94,7 @@ typedef struct		s_scene
 	t_camera		camera;
 	t_darr			models;
 	GLuint			model_shader;
+	t_float4		q_rotation;
 	t_mat4			m_model;
 	t_mat4			m_view;
 	t_mat4			m_proj;
