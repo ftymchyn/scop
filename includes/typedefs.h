@@ -20,6 +20,14 @@ typedef	struct		s_mat4
 	float			d[16];
 }					t_mat4;
 
+typedef	struct		s_tex
+{
+	unsigned char	*data;
+	int				width;
+	int				height;
+	int				channels;
+}					t_tex;
+
 typedef struct		s_mtl
 {
 	t_float3		ka;
@@ -89,8 +97,16 @@ typedef struct		s_camera
 	t_float3		pos;
 }					t_camera;
 
+typedef struct		s_skybox
+{
+	GLuint			vao;
+	GLuint			cubemap;
+	GLuint			shader;
+}					t_skybox;
+
 typedef struct		s_scene
 {
+	t_skybox		skybox;
 	t_camera		camera;
 	t_darr			models;
 	GLuint			model_shader;
