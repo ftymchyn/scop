@@ -18,6 +18,7 @@ void	init_camera(t_camera *cam, float width, float height)
 
 void	init_scene(t_scene *scene)
 {
+	scene->skybox = create_skybox("res/skybox/");
 	scene->model_shader = create_shader_program( "srcs/shaders/model.glsl");
 	m_identity(&scene->m_model);
 	m_identity(&scene->m_view);
