@@ -6,11 +6,11 @@ layout(location = 0) in vec2 a_texCoord;
 
 out vec3 texDir;
 
-uniform mat4 model;
+uniform mat4 view;
 
 void main()
 {
-	texDir = mat3(model) * vec3(a_texCoord, 1.0);
+	texDir = mat3(view) * vec3(a_texCoord, 1.0);
 	gl_Position = vec4(a_position, 1.0, 1.0);
 }
 
