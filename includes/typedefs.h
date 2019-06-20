@@ -64,6 +64,7 @@ typedef struct		s_group
 
 typedef struct		s_material
 {
+	const char		*id;
 	t_float3		ka;
 	t_float3		kd;
 	t_float3		ks;
@@ -87,7 +88,7 @@ typedef struct		s_model
 	t_darr			meshes;
 	t_float4		q_rotation;
 	t_float4		translation;
-	t_float4		scale;
+	float			scale;
 }					t_model;
 
 typedef struct		s_camera
