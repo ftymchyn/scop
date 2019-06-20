@@ -50,33 +50,25 @@ static GLuint	load_cubemap(char *folder)
 	return (cubemap);
 }
 
-static GLuint	create_quad()
+static GLuint	create_cube(char *res_folder)
 {
 	GLuint		vao;
-	GLuint		vbo[2];
-	int			i;
-	const float	buffer[] = {
-		-1.0f,  1.0f, -1.0f, -1.0f,  1.0f, -1.0f,
-		 1.0f, -1.0f,  1.0f,  1.0f, -1.0f,  1.0f
-	};
+	char		*file;
+	t_model		model;
+	t_mesh		*mesh;
 
-	GL_CALL(glGenVertexArrays(1, &vao));
-	GL_CALL(glBindVertexArray(vao));
-	GL_CALL(glGenBuffers(2, vbo));
-	i = -1;
-	while (++i < 2)
+	vao = 0;
+	file = ft_strjoin(res_folder, "cube.obj");
+	model = load_model(file);
+	if (model.meshes.size > 0)
 	{
-		GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, vbo[i]));
-		GL_CALL(
-			glBufferData(
-				GL_ARRAY_BUFFER, sizeof(buffer), buffer, GL_STATIC_DRAW)
-		);
-		GL_CALL(glEnableVertexAttribArray(i));
-		GL_CALL(
-			glVertexAttribPointer(
-				i, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (GLvoid *)0)
-		);
+		mesh = (t_mesh*)darr_at(&model.meshes, 0);
+		vao = mesh->vao;
+		mesh->vao = 0;
+		mesh->vbo_v = 0;
 	}
+	clear_model(&model);
+	free(file);
 	return (vao);
 }
 
@@ -85,7 +77,7 @@ t_skybox	create_skybox(char *res_folder)
 	t_skybox	skybox;
 
 	ft_bzero(&skybox, sizeof(t_skybox));
-	skybox.vao = create_quad();
+	skybox.vao = create_cube(res_folder);
 	skybox.cubemap = load_cubemap(res_folder);
 	skybox.shader = create_shader_program( "srcs/shaders/skybox.glsl");
 	return (skybox);

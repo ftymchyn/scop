@@ -8,6 +8,8 @@ static void	update_skybox_shader(t_scene *s)
 	view = m_rotmatrix_quat(s->model.q_rotation);
 	u_location = glGetUniformLocation(s->skybox.shader, "view");
 	glUniformMatrix4fv(u_location, 1, GL_TRUE, view.d);
+	u_location = glGetUniformLocation(s->skybox.shader, "proj");
+	glUniformMatrix4fv(u_location, 1, GL_TRUE, s->m_proj.d);
 }
 
 void	render_skybox(t_scene *scene)
@@ -18,7 +20,7 @@ void	render_skybox(t_scene *scene)
 	GL_CALL(glActiveTexture(GL_TEXTURE0));
 	GL_CALL(glBindTexture(GL_TEXTURE_CUBE_MAP, scene->skybox.cubemap));
 	GL_CALL(glDepthFunc(GL_LEQUAL));
-	GL_CALL(glDrawArrays(GL_TRIANGLES, 0, 6));
+	GL_CALL(glDrawArrays(GL_TRIANGLES, 0, 36));
 	GL_CALL(glDepthFunc(GL_LESS));
 	GL_CALL(glBindVertexArray(0));
 	GL_CALL(glUseProgram(0));
