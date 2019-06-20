@@ -20,8 +20,7 @@ void	init_scene(t_scene *scene)
 {
 	scene->skybox = create_skybox("res/skybox/");
 	scene->model_shader = create_shader_program( "srcs/shaders/model.glsl");
-	m_identity(&scene->m_model);
+	init_model(&scene->model);
 	m_identity(&scene->m_view);
 	m_identity(&scene->m_proj);
-	scene->q_rotation.w = 1.0f;
 }

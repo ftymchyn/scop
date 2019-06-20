@@ -48,7 +48,7 @@ static void		correct_face_indexes(t_obj *buffers, t_int3 **vidxs)
 	}
 }
 
-static void		prepare_mesh_face(t_mesh *mesh, t_darr *verts, t_obj *buffers)
+static void		fill_mesh(t_mesh *mesh, t_darr *verts, t_obj *buffers)
 {
 	t_int3		*vidxs[3];
 	size_t		i;
@@ -68,57 +68,48 @@ static void		prepare_mesh_face(t_mesh *mesh, t_darr *verts, t_obj *buffers)
 	}
 }
 
-static void	create_model(t_model *m, t_object *o, char *root)
+static void		fill_model(t_model *m, t_object *o, t_darr *mtls)
 {
 	t_group	*group;
-	t_darr	*face_verts;
 	t_mesh	*mesh;
 	size_t	i;
 	size_t	k;
 
-	(void)root;
-	init_model(m);
+	(void)mtls;
+	mesh = (t_mesh*)darr_last(&m->meshes);
 	i = -1;
 	while (++i < o->groups.size)
 	{
 		group = (t_group*)darr_at(&o->groups, i);
-		mesh = (t_mesh*)darr_create_last(&m->meshes);
-		init_mesh(mesh);
+		
 		k = -1;
 		while (++k < group->faces.size)
-		{
-			face_verts = (t_darr*)darr_at(&group->faces, k);
-			prepare_mesh_face(mesh, face_verts, o->data);
-		}
-		generate_buffers(mesh);
+			fill_mesh(mesh, (t_darr*)darr_at(&group->faces, k), o->data);
 	}
 }
 
-t_darr			load_models(const char *filename, float *min_dist)
+t_model			load_model(const char *filename)
 {
-	t_darr	result;
+	t_model	result;
 	t_obj	obj;
 	char	*root;
 	int		fd;
 	size_t	i;
 
-	darr_init(&result, sizeof(t_model));
+	init_model(&result);
+	init_mesh((t_mesh*)darr_create_last(&result.meshes));
 	fd = open(filename, O_RDONLY);
 	if ( fd != -1)
 	{
-		ft_printf("\nLoad models from file \"%s\" :\n");
+		ft_printf("\nLoad model from file \"%s\" :\n");
 		root = ft_strsub(filename, 0, ft_strrchr(filename, '/') - filename);
 		init_obj(&obj);
 		parse_obj_fd(fd, &obj, root);
 		close(fd);
 		i = -1;
 		while (++i < obj.objects.size)
-		{
-			create_model(
-				darr_create_last(&result), darr_at(&obj.objects, i), root
-			);
-		}
-		*min_dist = obj.min_dist;
+			fill_model(&result, darr_at(&obj.objects, i), &obj.mtls);
+		generate_buffers((t_mesh*)darr_last(&result.meshes));
 		clear_obj(&obj);
 		free(root);
 	}

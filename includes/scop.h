@@ -29,13 +29,13 @@ void		loop(t_scop *scop);
 
 t_skybox	create_skybox(char *res_folder);
 
-void		render_scene(t_scene *s);
-void		render_models(t_scene *scene);
+void		render_scene(t_scene *scene);
+void		render_model(t_scene *scene);
 void		render_skybox(t_scene *scene);
 
-t_darr		load_models(const char *filename, float *min_dist);
+t_model		load_model(const char *filename);
 void		init_model(t_model *model);
-void		clear_models(t_darr *models);
+void		clear_model(t_model *model);
 void		init_mesh(t_mesh *mesh);
 
 void		init_obj(t_obj *obj);

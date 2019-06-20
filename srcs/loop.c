@@ -13,5 +13,5 @@ void		loop(t_scop *scop)
 		render_scene(&scop->scene);
 		SDL_GL_SwapWindow(scop->window);
 	}
-	clear_models(&scop->scene.models);
+	clear_model(&scop->scene.model);
 }

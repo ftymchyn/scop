@@ -23,8 +23,7 @@ int	handle_mouse(void *scop, SDL_Event *e)
 			mpos = (t_int2){e->motion.x, e->motion.y};
 			rquat = trackball_rotate(&s->scene.camera, lmpos, mpos);
 			lmpos = mpos;
-			s->scene.q_rotation = q_mult(s->scene.q_rotation, rquat);
-			s->scene.m_model = m_rotmatrix_quat(s->scene.q_rotation);
+			s->scene.model.q_rotation = q_mult(s->scene.model.q_rotation, rquat);
 		}
 	}
 	return (1);

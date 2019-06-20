@@ -85,6 +85,9 @@ typedef struct		s_model
 {
 	t_darr			materials;
 	t_darr			meshes;
+	t_float4		q_rotation;
+	t_float4		translation;
+	t_float4		scale;
 }					t_model;
 
 typedef struct		s_camera
@@ -106,12 +109,10 @@ typedef struct		s_skybox
 
 typedef struct		s_scene
 {
-	t_skybox		skybox;
 	t_camera		camera;
-	t_darr			models;
+	t_skybox		skybox;
+	t_model			model;
 	GLuint			model_shader;
-	t_float4		q_rotation;
-	t_mat4			m_model;
 	t_mat4			m_view;
 	t_mat4			m_proj;
 }					t_scene;

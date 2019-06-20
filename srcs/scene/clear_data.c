@@ -1,32 +1,5 @@
 #include "scop.h"
 
-static void	clear_material(void *data)
-{
-	t_material *material;
-
-	if (data)
-	{
-		material = (t_material*)data;
-	}
-}
-
-static void	clear_mesh(void *data)
-{
-	t_mesh *mesh;
-
-	if (data)
-	{
-		mesh = (t_mesh*)data;
-		darr_clear(&mesh->v, NULL);
-		darr_clear(&mesh->vn, NULL);
-		darr_clear(&mesh->vt, NULL);
-		GL_CALL(glDeleteBuffers(1, &mesh->vbo_vn));
-		GL_CALL(glDeleteBuffers(1, &mesh->vbo_vt));
-		GL_CALL(glDeleteBuffers(1, &mesh->vbo_v));
-		GL_CALL(glDeleteVertexArrays(1, &mesh->vao));
-	}
-}
-
 static void	clear_face(void *data)
 {
 	t_darr	*darr;
@@ -35,20 +8,32 @@ static void	clear_face(void *data)
 	darr_clear(darr, NULL);
 }
 
-void		clear_models(t_darr *models)
+void		clear_model(t_model *model)
 {
-	t_model	*model;
-	size_t	i;
+	t_mesh		*mesh;
+	t_material	*material;
+	size_t		i;
 
-	i = 0;
-	while (i < models->size)
+	i = -1;
+	while (++i < model->meshes.size)
 	{
-		model = (t_model*)darr_at(models, i);
-		darr_clear(&model->materials, &clear_material);
-		darr_clear(&model->meshes, &clear_mesh);
-		i++;
+		mesh = (t_mesh*)darr_at(&model->meshes, i);
+		darr_clear(&mesh->v, NULL);
+		darr_clear(&mesh->vn, NULL);
+		darr_clear(&mesh->vt, NULL);
+		GL_CALL(glDeleteBuffers(1, &mesh->vbo_vn));
+		GL_CALL(glDeleteBuffers(1, &mesh->vbo_vt));
+		GL_CALL(glDeleteBuffers(1, &mesh->vbo_v));
+		GL_CALL(glDeleteVertexArrays(1, &mesh->vao));
 	}
-	darr_clear(models, NULL);
+	darr_clear(&model->meshes, NULL);
+	i = -1;
+	while (++i < model->materials.size)
+	{
+		material = (t_material*)darr_at(&model->materials, i);
+		ft_memdel((void**)&material->id);
+	}
+	darr_clear(&model->materials, NULL);
 }
 
 void		clear_obj(t_obj *obj)
