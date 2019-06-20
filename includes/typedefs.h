@@ -46,7 +46,7 @@ typedef struct		s_obj
 	t_darr			vt;
 	t_darr			mtls;
 	t_darr			objects;
-	float			min_dist;
+	float			max_vec_len;
 }					t_obj;
 
 typedef struct		s_object
