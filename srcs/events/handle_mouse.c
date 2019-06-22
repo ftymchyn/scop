@@ -1,11 +1,17 @@
 #include "scop.h"
 
+static void	handle_mouse_wheel(t_scop *s, SDL_Event *e)
+{
+	s->scene.model.scale += e->wheel.y / (30.0f / s->scene.model.scale);
+	s->scene.model.scale = MAX(0.05f, s->scene.model.scale);
+}
+
 static void	handle_mouse_motion(t_scop *s, SDL_Event *e)
 {
 	t_int2			mouse_pos;
 	t_float4		rquat;
 
-	if (e->type == SDL_MOUSEMOTION && s->events.mleft_btn_pressed)
+	if (s->events.mleft_btn_pressed)
 	{
 		mouse_pos = (t_int2){e->motion.x, e->motion.y};
 		rquat = trackball_rotate(
@@ -35,8 +41,10 @@ int			handle_mouse(void *scop, SDL_Event *e)
 		s = (t_scop*)scop;
 		if (e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP)
 			handle_mouse_btns(s, e);
-		if (e->type == SDL_MOUSEMOTION)
+		else if (e->type == SDL_MOUSEMOTION)
 			handle_mouse_motion(s, e);
+		else if (e->type == SDL_MOUSEWHEEL)
+			handle_mouse_wheel(s, e);
 	}
 	return (1);
 }
