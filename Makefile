@@ -30,20 +30,20 @@ SUB_DIR     = shaders events scene math render
 VPATH       = $(SRCS_DIR) $(addprefix $(SRCS_DIR)/, $(SUB_DIR)) $(OBJS_DIR)
 
 
-.PHONY: multi all clean fclean re
+.PHONY: all build clean fclean re
 
 
-multi:
-	$(MAKE) -j8 all
+all         :
+	$(MAKE) -j8 build
 
-all         : $(NAME)
+build       : $(NAME)
 
 $(NAME)     : $(LIBFT) $(OBJS_DIR) $(OBJS) $(HEADERS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(TO_LINKING)
 	@printf "\n\e[38;5;46m%-40s SUCCESSFUL BUILD 🖥\e[0m\n" ./$(NAME)
 
 $(LIBFT)    :
-	make -C $(LIBFT_DIR) -j8
+	+$(MAKE) -C $(LIBFT_DIR) build
 	cp $(LIBFT_DIR)/$(LIBFT) .
 
 $(OBJS_DIR) :
@@ -60,4 +60,4 @@ fclean      : clean
 	rm -f $(LIBFT)
 	rm -f $(NAME)
 
-re          : fclean multi
+re          : fclean all
