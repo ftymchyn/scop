@@ -11,10 +11,9 @@ HEADERS    := $(addprefix $(HEADERS_DIR)/, $(HEADERS))
 SRCS        = main.c gl_context.c loop.c create_shader_program.c
 SRCS       += register_events.c handle_exit.c handle_keyboard.c parse_obj_fd.c
 SRCS       += handle_dropfile.c init_data.c clear_data.c load_model.c
-SRCS       += generate_data.c cross.c norm.c dot.c parse_mtl.c init_scene.c
-SRCS       += m_view.c m_projection.c trackball.c quaternion.c matrix.c
-SRCS       += render_scene.c render_model.c handle_mouse.c create_skybox.c
-SRCS       += render_skybox.c
+SRCS       += generate_data.c cross.c norm.c dot.c parse_mtl.c trackball.c
+SRCS       += m_view.c m_projection.c quaternion.c matrix.c create_skybox.c
+SRCS       += render_scene.c render_model.c handle_mouse.c render_skybox.c
 OBJS        = $(SRCS:.c=.o)
 
 LIBFT       = libft.a

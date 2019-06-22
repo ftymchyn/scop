@@ -35,7 +35,6 @@ void	create_context(t_scop *scop, int width, int height)
 	ret = glewInit();
 	assert(ret == GLEW_OK);
 	init_camera(&scop->scene.camera, width, height);
-	init_scene(&scop->scene);
 }
 
 void	destroy_context(t_scop *scop)
