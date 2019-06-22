@@ -35,6 +35,6 @@ void	init_model(t_model *model)
 		darr_init(&model->materials, sizeof(t_material));
 		darr_init(&model->meshes, sizeof(t_mesh));
 		model->q_rotation.w = 1.0f;
-		model->scale.xyzw = 1.0f;
+		model->scale = 1.0f;
 	}
 }
