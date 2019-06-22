@@ -3,7 +3,7 @@
 static void	handle_mouse_wheel(t_scop *s, SDL_Event *e)
 {
 	s->scene.model.scale += e->wheel.y / (30.0f / s->scene.model.scale);
-	s->scene.model.scale = MAX(0.05f, s->scene.model.scale);
+	s->scene.model.scale = MAX(0.005f, s->scene.model.scale);
 }
 
 static void	handle_mouse_motion(t_scop *s, SDL_Event *e)
