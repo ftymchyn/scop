@@ -14,6 +14,8 @@ void	init_camera(t_camera *cam, float width, float height)
 	cam->far = 100.0f;
 	cam->rt_point.y = tanf(fov_y * 0.5 * 3.14159f / 180.0f) * cam->near;
 	cam->rt_point.x = cam->rt_point.y * aspect;
+	cam->m_view = m_view(cam);
+	cam->m_proj = m_projection(cam);
 }
 
 void	init_scene(t_scene *scene)
@@ -21,6 +23,4 @@ void	init_scene(t_scene *scene)
 	scene->skybox = create_skybox("res/skybox/");
 	scene->model_shader = create_shader_program( "srcs/shaders/model.glsl");
 	init_model(&scene->model);
-	m_identity(&scene->m_view);
-	m_identity(&scene->m_proj);
 }

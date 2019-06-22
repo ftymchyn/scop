@@ -11,9 +11,9 @@ static void	update_model_shader(t_scene *s)
 	u_location = glGetUniformLocation(s->model_shader, "model");
 	glUniformMatrix4fv(u_location, 1, GL_TRUE, m_mult(&scale, &rotate).d);
 	u_location = glGetUniformLocation(s->model_shader, "view");
-	glUniformMatrix4fv(u_location, 1, GL_TRUE, s->m_view.d);
+	glUniformMatrix4fv(u_location, 1, GL_TRUE, s->camera.m_view.d);
 	u_location = glGetUniformLocation(s->model_shader, "proj");
-	glUniformMatrix4fv(u_location, 1, GL_TRUE, s->m_proj.d);
+	glUniformMatrix4fv(u_location, 1, GL_TRUE, s->camera.m_proj.d);
 }
 
 void		render_model(t_scene *scene)

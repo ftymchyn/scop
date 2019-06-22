@@ -101,6 +101,8 @@ typedef struct		s_camera
 	float			far;
 	t_float2		rt_point;
 	t_float3		pos;
+	t_mat4			m_view;
+	t_mat4			m_proj;
 }					t_camera;
 
 typedef struct		s_skybox
@@ -116,8 +118,6 @@ typedef struct		s_scene
 	t_skybox		skybox;
 	t_model			model;
 	GLuint			model_shader;
-	t_mat4			m_view;
-	t_mat4			m_proj;
 }					t_scene;
 
 typedef struct		s_events

@@ -9,7 +9,7 @@ static void	update_skybox_shader(t_scene *s)
 	u_location = glGetUniformLocation(s->skybox.shader, "view");
 	glUniformMatrix4fv(u_location, 1, GL_TRUE, view.d);
 	u_location = glGetUniformLocation(s->skybox.shader, "proj");
-	glUniformMatrix4fv(u_location, 1, GL_TRUE, s->m_proj.d);
+	glUniformMatrix4fv(u_location, 1, GL_TRUE, s->camera.m_proj.d);
 }
 
 void	render_skybox(t_scene *scene)
