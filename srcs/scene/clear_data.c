@@ -12,7 +12,7 @@ void		clear_model(t_model *model)
 {
 	t_mesh		*mesh;
 	t_material	*material;
-	size_t		i;
+	int			i;
 
 	i = -1;
 	while (++i < model->meshes.size)
@@ -40,8 +40,8 @@ void		clear_obj(t_obj *obj)
 {
 	t_object	*object;
 	t_group		*group;
-	size_t		i;
-	size_t		k;
+	int			i;
+	int			k;
 
 	if (obj)
 	{

@@ -15,7 +15,7 @@ void	m_identity(t_mat4 *mat4)
 t_mat4	m_transpose(t_mat4 m)
 {
 	t_mat4	result;
-	size_t	i;
+	int		i;
 
 	i = 0;
 	while (i < 4)
@@ -32,8 +32,8 @@ t_mat4	m_transpose(t_mat4 m)
 t_mat4	m_mult(t_mat4 *m1, t_mat4 *m2)
 {
 	t_mat4	result;
-	size_t	i;
-	size_t	k;
+	int		i;
+	int		k;
 
 	i = -1;
 	while (++i < 4)

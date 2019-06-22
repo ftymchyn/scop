@@ -41,7 +41,7 @@ static void		parse_vertex_attrib(t_darr *buffer, char *data, t_obj *o)
 
 	vec3 = (t_float3*)darr_create_last(buffer);
 	i = 0;
-	while (i < 3 && (size_t)data > 1)
+	while (i < 3 && (int)data > 1)
 	{
 		(*vec3)[i] = ft_atof(data);
 		num = (*vec3)[i];
@@ -59,10 +59,10 @@ static void		parse_vertex_attrib(t_darr *buffer, char *data, t_obj *o)
 
 static void		parse_face(t_group *group, char *data)
 {
-	t_darr		*vertexes;
-	t_int3		*ivec3;
-	char		*subdata;
-	size_t		i;
+	t_darr	*vertexes;
+	t_int3	*ivec3;
+	char	*subdata;
+	int		i;
 
 	vertexes = (t_darr*)darr_create_last(&group->faces);
 	darr_init(vertexes, sizeof(t_int3));
@@ -73,7 +73,7 @@ static void		parse_face(t_group *group, char *data)
 		subdata = data;
 		i = -1;
 		ivec3 = (t_int3*)darr_create_last(vertexes);
-		while (++i < 3 && (size_t)subdata > 1)
+		while (++i < 3 && (int)subdata > 1)
 		{
 			(*ivec3)[i] = ft_atoi(subdata);
 			subdata = ft_strchr(subdata, '/') + 1;

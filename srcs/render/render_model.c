@@ -19,7 +19,7 @@ static void	update_model_shader(t_scene *s)
 void		render_model(t_scene *scene)
 {
 	t_mesh	*mesh;
-	size_t	i;
+	int		i;
 
 	GL_CALL(glUseProgram(scene->model_shader));
 	update_model_shader(scene);

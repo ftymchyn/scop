@@ -6,7 +6,7 @@ static void		push_data(t_mesh *mesh, t_obj *buffers, t_int3 **vidxs)
 	t_float3	*v[3];
 	t_float3	*vn[3];
 	t_float3	*vt[3];
-	size_t		i;
+	int			i;
 
 	i = -1;
 	while (++i < 3)
@@ -29,20 +29,20 @@ static void		push_data(t_mesh *mesh, t_obj *buffers, t_int3 **vidxs)
 
 static void		correct_face_indexes(t_obj *buffers, t_int3 **vidxs)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (i < 3)
 	{
-		if ((size_t)ABS(vidxs[i]->x) >= buffers->v.size)
+		if (ABS(vidxs[i]->x) >= buffers->v.size)
 			vidxs[i]->x = 0;
 		else if (vidxs[i]->x < 0)
 			vidxs[i]->x = buffers->v.size - vidxs[i]->x;
-		if ((size_t)ABS(vidxs[i]->y) >= buffers->vt.size)
+		if (ABS(vidxs[i]->y) >= buffers->vt.size)
 			vidxs[i]->y = 0;
 		else if (vidxs[i]->y < 0)
 			vidxs[i]->y = buffers->vt.size - vidxs[i]->y;
-		if ((size_t)ABS(vidxs[i]->z) >= buffers->vn.size)
+		if (ABS(vidxs[i]->z) >= buffers->vn.size)
 			vidxs[i]->z = 0;
 		else if (vidxs[i]->z < 0)
 			vidxs[i]->z = buffers->vn.size - vidxs[i]->z;
@@ -52,8 +52,8 @@ static void		correct_face_indexes(t_obj *buffers, t_int3 **vidxs)
 
 static void		fill_mesh(t_mesh *mesh, t_darr *verts, t_obj *buffers)
 {
-	t_int3		*vidxs[3];
-	size_t		i;
+	t_int3	*vidxs[3];
+	int		i;
 
 	if (verts->size >= 3)
 	{
@@ -74,8 +74,8 @@ static void		fill_model(t_model *m, t_object *o, t_darr *mtls)
 {
 	t_group	*group;
 	t_mesh	*mesh;
-	size_t	i;
-	size_t	k;
+	int		i;
+	int		k;
 
 	(void)mtls;
 	mesh = (t_mesh*)darr_last(&m->meshes);
@@ -96,7 +96,7 @@ t_model			load_model(const char *filename)
 	t_obj	o;
 	char	*root;
 	int		fd;
-	size_t	i;
+	int		i;
 
 	init_model(&result);
 	init_obj(&o);
