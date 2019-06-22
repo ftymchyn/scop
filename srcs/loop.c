@@ -2,12 +2,11 @@
 
 void		loop(t_scop *scop)
 {
-	scop->running = TRUE;
 	scop->scene.m_view = m_view(&scop->scene.camera);
 	scop->scene.m_proj = m_projection(&scop->scene.camera);
 	GL_CALL(glEnable(GL_DEPTH_TEST));
 	GL_CALL(glEnable(GL_MULTISAMPLE));
-	while (scop->running)
+	while (scop->events.should_close == FALSE)
 	{
 		SDL_PumpEvents();
 		render_scene(&scop->scene);

@@ -4,7 +4,10 @@ int	handle_exit(void *scop, SDL_Event *e)
 {
 	if (scop && e)
 	{
-		((t_scop*)scop)->running = (e->type != SDL_QUIT);
+		if ( e->type == SDL_QUIT)
+		{
+			((t_scop*)scop)->events.should_close = TRUE;
+		}
 	}
 	return (1);
 }

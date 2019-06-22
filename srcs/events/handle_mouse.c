@@ -1,30 +1,42 @@
 #include "scop.h"
 
-int	handle_mouse(void *scop, SDL_Event *e)
+static void	handle_mouse_motion(t_scop *s, SDL_Event *e)
 {
-	static t_bool	is_lbtn_pressed = FALSE;
-	static t_int2	lmpos = (t_int2)(0);
-	t_int2			mpos;
-	t_scop			*s;
+	t_int2			mouse_pos;
 	t_float4		rquat;
+
+	if (e->type == SDL_MOUSEMOTION && s->events.mleft_btn_pressed)
+	{
+		mouse_pos = (t_int2){e->motion.x, e->motion.y};
+		rquat = trackball_rotate(
+			&s->scene.camera, s->events.last_mouse_pos, mouse_pos
+		);
+		s->events.last_mouse_pos = mouse_pos;
+		s->scene.model.q_rotation = q_mult(s->scene.model.q_rotation, rquat);
+	}
+}
+
+static void	handle_mouse_btns(t_scop *s, SDL_Event *e)
+{
+	if (e->button.button == SDL_BUTTON_LEFT)
+	{
+		s->events.mleft_btn_pressed = !s->events.mleft_btn_pressed;
+		if (s->events.mleft_btn_pressed)
+			s->events.last_mouse_pos = (t_int2){e->button.x, e->button.y};
+	}
+}
+
+int			handle_mouse(void *scop, SDL_Event *e)
+{
+	t_scop	*s;
 
 	if (scop && e)
 	{
 		s = (t_scop*)scop;
-		if (e->button.button == SDL_BUTTON_LEFT
-		&& (e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP))
-		{
-			is_lbtn_pressed = !is_lbtn_pressed;
-			if (is_lbtn_pressed)
-				lmpos = (t_int2){e->button.x, e->button.y};
-		}
-		else if (e->type == SDL_MOUSEMOTION && is_lbtn_pressed)
-		{
-			mpos = (t_int2){e->motion.x, e->motion.y};
-			rquat = trackball_rotate(&s->scene.camera, lmpos, mpos);
-			lmpos = mpos;
-			s->scene.model.q_rotation = q_mult(s->scene.model.q_rotation, rquat);
-		}
+		if (e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP)
+			handle_mouse_btns(s, e);
+		if (e->type == SDL_MOUSEMOTION)
+			handle_mouse_motion(s, e);
 	}
 	return (1);
 }

@@ -120,11 +120,18 @@ typedef struct		s_scene
 	t_mat4			m_proj;
 }					t_scene;
 
+typedef struct		s_events
+{
+	t_bool			should_close;
+	t_bool			mleft_btn_pressed;
+	t_int2			last_mouse_pos;
+}					t_events;
+
 typedef struct		s_scop
 {
-	t_bool			running;
 	SDL_Window		*window;
 	SDL_GLContext	*context;
+	t_events		events;
 	t_scene			scene;
 }					t_scop;
 
