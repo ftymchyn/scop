@@ -34,7 +34,7 @@ VPATH       = $(SRCS_DIR) $(addprefix $(SRCS_DIR)/, $(SUB_DIR)) $(OBJS_DIR)
 
 
 all         :
-	$(MAKE) -j8 build
+	$(MAKE) -j8 build -s
 
 build       : $(NAME)
 
