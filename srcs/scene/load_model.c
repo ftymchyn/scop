@@ -2,6 +2,7 @@
 
 static void		push_data(t_mesh *mesh, t_obj *buffers, t_int3 **vidxs)
 {
+	t_float3	recalc_v;
 	t_float3	*v[3];
 	t_float3	*vn[3];
 	t_float3	*vt[3];
@@ -19,7 +20,8 @@ static void		push_data(t_mesh *mesh, t_obj *buffers, t_int3 **vidxs)
 	i = -1;
 	while (++i < 3)
 	{
-		darr_pushback(&mesh->v, v[i]);
+		recalc_v = *(v[i]) - buffers->mid_vec;
+		darr_pushback(&mesh->v, &recalc_v);
 		darr_pushback(&mesh->vn, vn[i]);
 		darr_pushback(&mesh->vt, vt[i]);
 	}
@@ -81,7 +83,7 @@ static void		fill_model(t_model *m, t_object *o, t_darr *mtls)
 	while (++i < o->groups.size)
 	{
 		group = (t_group*)darr_at(&o->groups, i);
-		
+
 		k = -1;
 		while (++k < group->faces.size)
 			fill_mesh(mesh, (t_darr*)darr_at(&group->faces, k), o->data);
@@ -105,6 +107,7 @@ t_model			load_model(const char *filename)
 		root = ft_strsub(filename, 0, ft_strrchr(filename, '/') - filename);
 		init_obj(&obj);
 		parse_obj_fd(fd, &obj, root);
+		obj.mid_vec = (obj.min_p + obj.max_p) * 0.5f;
 		close(fd);
 		i = -1;
 		while (++i < obj.objects.size)

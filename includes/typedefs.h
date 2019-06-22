@@ -46,7 +46,9 @@ typedef struct		s_obj
 	t_darr			vt;
 	t_darr			mtls;
 	t_darr			objects;
-	float			max_vec_len;
+	t_float3		min_p;
+	t_float3		max_p;
+	t_float3		mid_vec;
 }					t_obj;
 
 typedef struct		s_object

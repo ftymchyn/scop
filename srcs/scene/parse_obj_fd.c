@@ -33,7 +33,7 @@ static t_group	*create_group(t_obj *obj, char *name)
 	return (result);
 }
 
-static void		parse_vertex_attrib(t_darr *buffer, char *data)
+static void		parse_vertex_attrib(t_darr *buffer, char *data, t_obj *o)
 {
 	t_float3	*vec3;
 	float		num;
@@ -46,6 +46,13 @@ static void		parse_vertex_attrib(t_darr *buffer, char *data)
 		(*vec3)[i] = ft_atof(data);
 		num = (*vec3)[i];
 		data = ft_strchr(data, ' ') + 1;
+		i++;
+	}
+	i = 0;
+	while (i < 3 && o)
+	{
+		o->min_p[i] = MIN(o->min_p[i], (*vec3)[i]);
+		o->max_p[i] = MAX(o->max_p[i], (*vec3)[i]);
 		i++;
 	}
 }
@@ -91,11 +98,11 @@ void			parse_obj_fd(int fd, t_obj *obj, char *root)
 		else if (ft_strnequ(line, "mtllib ", 7))
 			parse_mtl(obj, root, line + 7);
 		else if (ft_strnequ(line, "v ", 2))
-			parse_vertex_attrib(&obj->v, line + 2);
+			parse_vertex_attrib(&obj->v, line + 2, obj);
 		else if (ft_strnequ(line, "vt ", 3))
-			parse_vertex_attrib(&obj->vt, line + 3);
+			parse_vertex_attrib(&obj->vt, line + 3, NULL);
 		else if (ft_strnequ(line, "vn ", 3))
-			parse_vertex_attrib(&obj->vn, line + 3);
+			parse_vertex_attrib(&obj->vn, line + 3, NULL);
 		else if (ft_strnequ(line, "f ", 2))
 			parse_face(
 				group ? group : (group = create_group(obj, NULL)), line + 2
