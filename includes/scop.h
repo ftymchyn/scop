@@ -58,6 +58,7 @@ t_mat4		m_view(t_camera *cam);
 t_mat4		m_projection(t_camera *c);
 t_mat4		m_mult(t_mat4 *m1, t_mat4 *m2);
 t_mat4		m_rotmatrix_quat(t_float4 q);
+t_mat4		m_scale(float scale);
 
 t_float4	q_angle_axis(t_float3 axis, float angle);
 t_float4	q_mult(t_float4 q1, t_float4 q2);
