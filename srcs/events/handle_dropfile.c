@@ -15,8 +15,6 @@ int	handle_dropfile(void *scop, SDL_Event *e)
 				model = load_model(e->drop.file);
 				clear_model(&s->scene.model);
 				s->scene.model = model;
-				s->scene.camera.pos = (t_float3){0.0f, 0.0f, 5.0f};
-				s->scene.m_view = m_view(&s->scene.camera);
 			}
 			else
 				ft_putendl("Can parse only *.obj");
