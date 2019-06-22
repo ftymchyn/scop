@@ -93,28 +93,28 @@ static void		fill_model(t_model *m, t_object *o, t_darr *mtls)
 t_model			load_model(const char *filename)
 {
 	t_model	result;
-	t_obj	obj;
+	t_obj	o;
 	char	*root;
 	int		fd;
 	size_t	i;
 
 	init_model(&result);
+	init_obj(&o);
 	init_mesh((t_mesh*)darr_create_last(&result.meshes));
-	fd = open(filename, O_RDONLY);
-	if ( fd != -1)
+	if ((fd = open(filename, O_RDONLY)) != -1)
 	{
 		ft_printf("\nLoad model from file \"%s\" :\n");
 		root = ft_strsub(filename, 0, ft_strrchr(filename, '/') - filename);
-		init_obj(&obj);
-		parse_obj_fd(fd, &obj, root);
-		obj.mid_vec = (obj.min_p + obj.max_p) * 0.5f;
-		close(fd);
+		parse_obj_fd(fd, &o, root);
+		o.mid_vec = (o.min_p + o.max_p) * 0.5f;
+		result.scale /= sqrtf(dot3f(o.min_p - o.max_p, o.min_p - o.max_p));
 		i = -1;
-		while (++i < obj.objects.size)
-			fill_model(&result, darr_at(&obj.objects, i), &obj.mtls);
+		while (++i < o.objects.size)
+			fill_model(&result, darr_at(&o.objects, i), &o.mtls);
 		generate_buffers((t_mesh*)darr_last(&result.meshes));
-		clear_obj(&obj);
 		free(root);
 	}
+	close(fd);
+	clear_obj(&o);
 	return (result);
 }
