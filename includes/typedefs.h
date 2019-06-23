@@ -101,6 +101,7 @@ typedef struct		s_camera
 	float			far;
 	t_float2		rt_point;
 	t_float3		pos;
+	t_float4		q_rotation;
 	t_mat4			m_view;
 	t_mat4			m_proj;
 }					t_camera;
@@ -124,7 +125,8 @@ typedef struct		s_events
 {
 	t_bool			should_close;
 	t_bool			mleft_btn_pressed;
-	t_int2			last_mouse_pos;
+	t_bool			mright_btn_pressed;
+	t_int2			last_motion_pos;
 }					t_events;
 
 typedef struct		s_scop
