@@ -9,24 +9,29 @@ static void	handle_mouse_wheel(t_scop *s, SDL_Event *e)
 static void	handle_mouse_motion(t_scop *s, SDL_Event *e)
 {
 	t_int2			motion_pos;
-	t_float4		rquat;
+	t_float4		angle_axis;
 
 	if (s->events.mleft_btn_pressed ^ s->events.mright_btn_pressed)
 	{
 		motion_pos = (t_int2){e->motion.x, e->motion.y};
-		rquat = trackball_rotate(
+		angle_axis = trackball_rotate(
 			&s->scene.camera, s->events.last_motion_pos, motion_pos
 		);
 		s->events.last_motion_pos = motion_pos;
 		if (s->events.mleft_btn_pressed)
 		{
-			s->scene.model.q_rotation =
-				q_mult(s->scene.model.q_rotation, rquat);
+			angle_axis.xyz = q_rotate_vec3(
+				s->scene.camera.q_rotation, angle_axis.xyz
+			);
+			s->scene.model.q_rotation = q_mult(
+				s->scene.model.q_rotation, q_from_axis_angle(angle_axis)
+			);
 		}
 		else
 		{
-			s->scene.camera.q_rotation =
-				q_mult(s->scene.camera.q_rotation, rquat);
+			s->scene.camera.q_rotation = q_mult(
+				s->scene.camera.q_rotation, q_from_axis_angle(angle_axis)
+			);
 		}
 	}
 }
