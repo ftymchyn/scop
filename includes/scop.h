@@ -61,6 +61,7 @@ t_mat4		m_scale(float scale);
 
 t_float4	q_from_axis_angle(t_float4 axis_angle);
 t_float4	q_mult(t_float4 q1, t_float4 q2);
+t_float3	q_rotate_vec3(t_float4 q, t_float3 v);
 
 t_float4	trackball_rotate(t_camera *cam, t_int2 p1, t_int2 p2);
 
