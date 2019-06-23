@@ -8,27 +8,44 @@ static void	handle_mouse_wheel(t_scop *s, SDL_Event *e)
 
 static void	handle_mouse_motion(t_scop *s, SDL_Event *e)
 {
-	t_int2			mouse_pos;
+	t_int2			motion_pos;
 	t_float4		rquat;
 
-	if (s->events.mleft_btn_pressed)
+	if (s->events.mleft_btn_pressed ^ s->events.mright_btn_pressed)
 	{
-		mouse_pos = (t_int2){e->motion.x, e->motion.y};
+		motion_pos = (t_int2){e->motion.x, e->motion.y};
 		rquat = trackball_rotate(
-			&s->scene.camera, s->events.last_mouse_pos, mouse_pos
+			&s->scene.camera, s->events.last_motion_pos, motion_pos
 		);
-		s->events.last_mouse_pos = mouse_pos;
-		s->scene.model.q_rotation = q_mult(s->scene.model.q_rotation, rquat);
+		s->events.last_motion_pos = motion_pos;
+		if (s->events.mleft_btn_pressed)
+		{
+			s->scene.model.q_rotation =
+				q_mult(s->scene.model.q_rotation, rquat);
+		}
+		else
+		{
+			s->scene.camera.q_rotation =
+				q_mult(s->scene.camera.q_rotation, rquat);
+		}
 	}
 }
 
 static void	handle_mouse_btns(t_scop *s, SDL_Event *e)
 {
-	if (e->button.button == SDL_BUTTON_LEFT)
+	if (e->button.button == SDL_BUTTON_LEFT
+		|| e->button.button == SDL_BUTTON_RIGHT)
 	{
-		s->events.mleft_btn_pressed = !s->events.mleft_btn_pressed;
-		if (s->events.mleft_btn_pressed)
-			s->events.last_mouse_pos = (t_int2){e->button.x, e->button.y};
+		if (e->button.button == SDL_BUTTON_LEFT)
+		{
+			s->events.mleft_btn_pressed = !s->events.mleft_btn_pressed;
+		}
+		else
+		{
+			s->events.mright_btn_pressed = !s->events.mright_btn_pressed;
+		}
+		if (s->events.mright_btn_pressed ^ s->events.mleft_btn_pressed)
+			s->events.last_motion_pos = (t_int2){e->button.x, e->button.y};
 	}
 }
 
