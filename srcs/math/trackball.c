@@ -32,5 +32,5 @@ t_float4	trackball_rotate(t_camera *cam, t_int2 p1, t_int2 p2)
 	dist = MAX(dist, -1.0f);
 	axis_angle.xyz = cross3f(p[1], p[0]);
 	axis_angle.w = 2.0f * asin(dist);
-	return (q_from_axis_angle(axis_angle));
+	return (axis_angle);
 }
