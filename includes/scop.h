@@ -59,7 +59,7 @@ t_mat4		m_mult(t_mat4 *m1, t_mat4 *m2);
 t_mat4		m_rotmatrix_quat(t_float4 q);
 t_mat4		m_scale(float scale);
 
-t_float4	q_angle_axis(t_float3 axis, float angle);
+t_float4	q_from_axis_angle(t_float4 axis_angle);
 t_float4	q_mult(t_float4 q1, t_float4 q2);
 
 t_float4	trackball_rotate(t_camera *cam, t_int2 p1, t_int2 p2);

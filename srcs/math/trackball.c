@@ -19,8 +19,7 @@ t_float4	trackball_rotate(t_camera *cam, t_int2 p1, t_int2 p2)
 {
 	t_float3	p[2];
 	t_float3	vec;
-	t_float3	axis;
-	float		angle;
+	t_float4	axis_angle;
 	float		dist;
 
 	if (p1.x == p2.x && p1.y == p2.y)
@@ -31,7 +30,7 @@ t_float4	trackball_rotate(t_camera *cam, t_int2 p1, t_int2 p2)
 	dist = sqrtf(dot3f(vec, vec));
 	dist = MIN(dist, 1.0f);
 	dist = MAX(dist, -1.0f);
-	axis = cross3f(p[1], p[0]);
-	angle = 2.0f * asin(dist);
-	return (q_angle_axis(axis, angle));
+	axis_angle.xyz = cross3f(p[1], p[0]);
+	axis_angle.w = 2.0f * asin(dist);
+	return (q_from_axis_angle(axis_angle));
 }

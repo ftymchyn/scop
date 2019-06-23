@@ -1,11 +1,11 @@
 #include "scop.h"
 
-t_float4	q_angle_axis(t_float3 axis, float angle)
+t_float4	q_from_axis_angle(t_float4 axis_angle)
 {
 	t_float4 result;
 
-	result.xyz = norm3f(axis) * sin(angle * 0.5f);
-	result.w = cos(angle* 0.5f);
+	result.xyz = norm3f(axis_angle.xyz) * sin(axis_angle.w * 0.5f);
+	result.w = cos(axis_angle.w * 0.5f);
 	return (result);
 }
 
