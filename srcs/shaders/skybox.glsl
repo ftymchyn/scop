@@ -12,7 +12,7 @@ void main()
 {
 	texDir = a_position;
 	texDir.z *= -1.0;
-	gl_Position = proj * view * vec4(a_position, 1.0);
+	gl_Position = proj * mat4( mat3( view ) ) * vec4(a_position, 1.0);
 	gl_Position = gl_Position.xyww;
 }
 

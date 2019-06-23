@@ -11,14 +11,18 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 proj;
 
+const vec3 directionToSun = vec3( -0.8, 0.8, 1.0 );
+
 void main()
 {
-	vec4 normal = normalize(
-		transpose(inverse(model)) * vec4(a_normal, 0.0f)
+	vec3 l = normalize( mat3( view ) * directionToSun );
+	vec3 n = normalize(
+		transpose( inverse( mat3( view * model ) ) ) * a_normal
 	);
-	float intensity = max(dot(normal, vec4(0.0, 0.0, 1.0, 0.0f)),0.0);
-	frag_color = vec3(0.7) * intensity;
-	gl_Position = proj * view * model * vec4(a_position, 1.0);
+	float intensity = max( 0.0, dot( n, l ) );
+	frag_color = vec3( 0.7 ) * intensity;
+
+	gl_Position = proj * view * model * vec4( a_position, 1.0 );
 }
 
 //FRAGMENT SHADER

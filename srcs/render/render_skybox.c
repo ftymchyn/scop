@@ -2,12 +2,10 @@
 
 static void	update_skybox_shader(t_scene *s)
 {
-	t_mat4	view;
 	GLint	u_location;
 
-	view = m_rotmatrix_quat(s->model.q_rotation);
 	u_location = glGetUniformLocation(s->skybox.shader, "view");
-	glUniformMatrix4fv(u_location, 1, GL_TRUE, view.d);
+	glUniformMatrix4fv(u_location, 1, GL_TRUE, s->camera.m_view.d);
 	u_location = glGetUniformLocation(s->skybox.shader, "proj");
 	glUniformMatrix4fv(u_location, 1, GL_TRUE, s->camera.m_proj.d);
 }
