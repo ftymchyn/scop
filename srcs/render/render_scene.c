@@ -1,9 +1,9 @@
 #include "scop.h"
 
-void	render_scene(t_scene *scene)
+void	render_scene(t_scop *s)
 {
 	GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-	scene->camera.m_view = m_view(&scene->camera);
-	render_model(scene);
-	render_skybox(scene);
+	s->scene.camera.m_view = m_view(&s->scene.camera);
+	render_model(s);
+	render_skybox(s);
 }
