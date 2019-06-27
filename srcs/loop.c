@@ -12,7 +12,7 @@ void		loop(t_scop *scop)
 	while (scop->events.should_close == FALSE)
 	{
 		SDL_PumpEvents();
-		render_scene(&scop->scene);
+		render_scene(scop);
 		SDL_GL_SwapWindow(scop->window);
 	}
 	clear_model(&scop->scene.model);
