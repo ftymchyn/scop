@@ -28,9 +28,9 @@ void		loop(t_scop *scop);
 
 t_skybox	create_skybox(char *res_folder);
 
-void		render_scene(t_scene *scene);
-void		render_model(t_scene *scene);
-void		render_skybox(t_scene *scene);
+void		render_scene(t_scop *s);
+void		render_model(t_scop *s);
+void		render_skybox(t_scop *s);
 
 t_model		load_model(const char *filename);
 void		init_model(t_model *model);
@@ -54,8 +54,9 @@ float		dot4f(t_float4 v1, t_float4 v2);
 void		m_identity(t_mat4 *mat4);
 t_mat4		m_transpose(t_mat4 m);
 t_mat4		m_view(t_camera *cam);
-t_mat4		m_projection(t_camera *c);
-t_mat4		m_mult(t_mat4 *m1, t_mat4 *m2);
+t_mat4		m_persp(float w, float h, float near, float far);
+t_mat4		m_ortho(float w, float h, float near, float far);
+t_mat4		m_mult(t_mat4 m1, t_mat4 m2);
 t_mat4		m_rotmatrix_quat(t_float4 q);
 t_mat4		m_scale(float scale);
 

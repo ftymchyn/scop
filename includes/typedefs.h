@@ -95,15 +95,13 @@ typedef struct		s_model
 
 typedef struct		s_camera
 {
-	unsigned int	width;
-	unsigned int	height;
-	float			near;
-	float			far;
-	t_float2		rt_point;
+	unsigned int	w;
+	unsigned int	h;
 	t_float3		pos;
 	t_float4		q_rotation;
 	t_mat4			m_view;
-	t_mat4			m_proj;
+	t_mat4			m_persp;
+	t_mat4			m_ortho;
 }					t_camera;
 
 typedef struct		s_skybox
@@ -127,6 +125,7 @@ typedef struct		s_events
 	t_bool			mleft_btn_pressed;
 	t_bool			mright_btn_pressed;
 	t_int2			last_motion_pos;
+	t_bool			is_ortho_projection;
 }					t_events;
 
 typedef struct		s_scop
