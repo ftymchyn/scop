@@ -4,12 +4,12 @@ static t_float3	to_ball_rel(t_camera *cam, t_int2 pos)
 {
 	t_float3	result;
 
-	result.x = pos.x - cam->width * 0.5f;
-	result.y = pos.y - cam->height * 0.5f;
-	if (cam->width > cam->height)
-		result /= cam->height * 0.5f;
+	result.x = pos.x - cam->w * 0.5f;
+	result.y = pos.y - cam->h * 0.5f;
+	if (cam->w > cam->h)
+		result /= cam->h * 0.5f;
 	else
-		result /= cam->width * 0.5f;
+		result /= cam->w * 0.5f;
 	result *= -1.0f;
 	result.z = 0.5f;
 	return (result);
