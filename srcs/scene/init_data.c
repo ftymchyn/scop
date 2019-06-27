@@ -41,19 +41,11 @@ void	init_model(t_model *model)
 
 void	init_camera(t_camera *cam, float width, float height)
 {
-	float	fov_y;
-	float	aspect;
-
-	fov_y = 70.0f;
-	aspect = width / height;
-	cam->width = width;
-	cam->height = height;
-	cam->near = 0.1f;
-	cam->far = 100.0f;
-	cam->rt_point.y = tanf(fov_y * 0.5 * 3.14159f / 180.0f) * cam->near;
-	cam->rt_point.x = cam->rt_point.y * aspect;
+	cam->w = width;
+	cam->h = height;
 	cam->pos = (t_float3){ 0.0f, 0.0f, 1.0f };
 	cam->q_rotation.w = 1.0f;
 	cam->m_view = m_view(cam);
-	cam->m_proj = m_projection(cam);
+	cam->m_persp = m_persp(cam->w, cam->h, 0.1f, 100.0f);
+	cam->m_ortho = m_ortho(cam->w, cam->h, 1.0f, 100.0f);
 }
