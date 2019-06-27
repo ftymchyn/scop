@@ -29,7 +29,7 @@ t_mat4	m_transpose(t_mat4 m)
 	return (result);
 }
 
-t_mat4	m_mult(t_mat4 *m1, t_mat4 *m2)
+t_mat4	m_mult(t_mat4 m1, t_mat4 m2)
 {
 	t_mat4	result;
 	int		i;
@@ -42,10 +42,10 @@ t_mat4	m_mult(t_mat4 *m1, t_mat4 *m2)
 		while (++k < 4)
 		{
 			result.d[i * 4 + k] =
-			m1->d[i * 4] * m2->d[i * 4 + k]
-			+ m1->d[i * 4 + 1] * m2->d[i * 4 + k]
-			+ m1->d[i * 4 + 2] * m2->d[i * 4 + k]
-			+ m1->d[i * 4 + 3] * m2->d[i * 4 + k];
+			m1.d[i * 4] * m2.d[i * 4 + k]
+			+ m1.d[i * 4 + 1] * m2.d[i * 4 + k]
+			+ m1.d[i * 4 + 2] * m2.d[i * 4 + k]
+			+ m1.d[i * 4 + 3] * m2.d[i * 4 + k];
 		}
 	}
 	return (result);
