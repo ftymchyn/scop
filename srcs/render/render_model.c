@@ -12,11 +12,11 @@ static void	update_model_shader(t_scop *s)
 	);
 	proj = (s->events.is_ortho_projection ?
 			s->scene.camera.m_ortho : s->scene.camera.m_persp);
-	u_location = glGetUniformLocation(s->scene.model_shader, "model");
+	u_location = glGetUniformLocation(s->scene.model_shader, "u_mvp.model");
 	glUniformMatrix4fv(u_location, 1, GL_TRUE, model.d);
-	u_location = glGetUniformLocation(s->scene.model_shader, "view");
+	u_location = glGetUniformLocation(s->scene.model_shader, "u_mvp.view");
 	glUniformMatrix4fv(u_location, 1, GL_TRUE, s->scene.camera.m_view.d);
-	u_location = glGetUniformLocation(s->scene.model_shader, "proj");
+	u_location = glGetUniformLocation(s->scene.model_shader, "u_mvp.proj");
 	glUniformMatrix4fv(u_location, 1, GL_TRUE, proj.d);
 }
 
