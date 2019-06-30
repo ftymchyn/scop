@@ -63,7 +63,6 @@ static void		parse_face(t_group *group, char *data)
 {
 	t_darr	*vertexes;
 	t_int3	ivec3;
-	char *cpy = data;
 	char	*subdata;
 	int		i;
 
