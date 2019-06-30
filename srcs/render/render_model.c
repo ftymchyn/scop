@@ -18,6 +18,14 @@ static void	update_model_shader(t_scop *s)
 	glUniformMatrix4fv(u_location, 1, GL_TRUE, s->scene.camera.m_view.d);
 	u_location = glGetUniformLocation(s->scene.model_shader, "u_mvp.proj");
 	glUniformMatrix4fv(u_location, 1, GL_TRUE, proj.d);
+	u_location = glGetUniformLocation(s->scene.model_shader, "u_light.dir");
+	glUniform3fv(u_location, 1, (GLfloat*)&s->scene.light.dir);
+	u_location = glGetUniformLocation(s->scene.model_shader, "u_light.ka");
+	glUniform4f(u_location,
+		s->scene.light.ka.x, s->scene.light.ka.y, s->scene.light.ka.z, 1.0f);
+	u_location = glGetUniformLocation(s->scene.model_shader, "u_light.kd");
+	glUniform4f(u_location,
+		s->scene.light.kd.x, s->scene.light.kd.y, s->scene.light.kd.z, 1.0f);
 }
 
 void		render_model(t_scop *s)

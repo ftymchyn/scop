@@ -5,7 +5,7 @@ layout(location = 0) in vec3 a_position;
 layout(location = 1) in vec3 a_normal;
 layout(location = 2) in vec2 a_uv;
 
-out vec3 frag_color;
+out vec4 frag_color;
 
 uniform struct
 {
@@ -14,24 +14,31 @@ uniform struct
 	mat4 proj;
 }		 u_mvp;
 
-const vec3 directionToSun = vec3( -0.8, 0.8, 1.0 );
+uniform struct
+{
+	vec3 dir;
+	vec4 ka;
+	vec4 kd;
+}		 u_light;
 
 void main()
 {
-	vec3 l = normalize( directionToSun );
+	vec3 l = normalize( u_light.dir * -1.0 );
 	vec3 n = normalize( transpose( inverse( mat3( u_mvp.model ) ) ) * a_normal );
-	float intensity = max( 0.0, dot( n, l ) );
-	frag_color = vec3( 0.7 ) * intensity;
 
+	vec4 ambient = u_light.ka * u_light.kd;
+	vec4 diffuse = u_light.kd * max( 0.0, dot( n, l ) );
+
+	frag_color = ambient + diffuse;
 	gl_Position = u_mvp.proj * u_mvp.view * u_mvp.model * vec4( a_position, 1.0 );
 }
 
 //FRAGMENT SHADER
 #version 330 core
 
-in vec3 frag_color;
+in vec4 frag_color;
 
 void main()
 {
-	gl_FragColor = vec4(frag_color, 1.0);
+	gl_FragColor = frag_color;
 }

@@ -111,10 +111,18 @@ typedef struct		s_skybox
 	GLuint			shader;
 }					t_skybox;
 
+typedef struct		s_light
+{
+	t_float3		dir;
+	t_float3		ka;
+	t_float3		kd;
+}					t_light;
+
 typedef struct		s_scene
 {
 	t_camera		camera;
 	t_skybox		skybox;
+	t_light			light;
 	t_model			model;
 	GLuint			model_shader;
 }					t_scene;
