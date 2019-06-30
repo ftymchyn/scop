@@ -38,14 +38,3 @@ void	init_model(t_model *model)
 		model->scale = 1.0f;
 	}
 }
-
-void	init_camera(t_camera *cam, float width, float height)
-{
-	cam->w = width;
-	cam->h = height;
-	cam->pos = (t_float3){ 0.0f, 0.0f, 1.0f };
-	cam->q_rotation.w = 1.0f;
-	cam->m_view = m_view(cam);
-	cam->m_persp = m_persp(cam->w, cam->h, 0.1f, 100.0f);
-	cam->m_ortho = m_ortho(cam->w, cam->h, 1.0f, 100.0f);
-}

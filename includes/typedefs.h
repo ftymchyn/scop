@@ -95,8 +95,8 @@ typedef struct		s_model
 
 typedef struct		s_camera
 {
-	unsigned int	w;
-	unsigned int	h;
+	int				w;
+	int				h;
 	t_float3		pos;
 	t_float4		q_rotation;
 	t_mat4			m_view;

@@ -23,7 +23,6 @@ int			handle_keyboard(void *scop, SDL_Event *e);
 int			handle_dropfile(void *scop, SDL_Event *e);
 int			handle_mouse(void *scop, SDL_Event *e);
 
-void		init_camera(t_camera *cam, float width, float height);
 void		loop(t_scop *scop);
 
 t_skybox	create_skybox(char *res_folder);
