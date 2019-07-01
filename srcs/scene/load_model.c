@@ -104,7 +104,7 @@ t_model			load_model(const char *filename)
 	if ((fd = open(filename, O_RDONLY)) != -1)
 	{
 		ft_printf("\nLoad model from file \"%s\" :\n");
-		root = ft_strsub(filename, 0, ft_strrchr(filename, '/') - filename);
+		root = ft_strsub(filename, 0, ft_strrchr(filename, '/') - filename + 1);
 		parse_obj_fd(fd, &o, root);
 		o.mid_vec = (o.min_p + o.max_p) * 0.5f;
 		result.scale /= sqrtf(dot3f(o.min_p - o.max_p, o.min_p - o.max_p));
