@@ -30,10 +30,12 @@ typedef	struct		s_tex
 
 typedef struct		s_mtl
 {
+	char			*name;
 	t_float3		ka;
 	t_float3		kd;
 	t_float3		ks;
 	float			ns;
+	char			*fmap_ka;
 	char			*fmap_kd;
 	char			*fmap_ks;
 	char			*fmap_bump;
