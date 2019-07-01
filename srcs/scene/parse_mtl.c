@@ -24,15 +24,31 @@ static void	parse_color_statement(t_mtl *mtl, char *statement)
 			mtl->ks = value;
 		else if (ft_strequ(type, "Ns"))
 			mtl->ns = value.x;
-		ft_printf( "%s %f %f %f\n", type, value.x, value.y, value.z );
 	}
 	darr_clear(&split_statement, (void (*)(void *))&ft_memdel);
 }
 
-static void	parse_texture_statement(t_mtl *mtl, char *statement)
+static void	parse_texture_statement(t_mtl *mtl, char *statement, char *root)
 {
-(void)mtl;
-(void)statement;
+	char		*type;
+	char		*tex_path;
+	t_darr		split_statement;
+
+	split_statement = ft_strsplit_vec(statement, ' ');
+	if (split_statement.size > 1)
+	{
+		tex_path = ft_strjoin(root, *(char**)darr_last(&split_statement));
+		type = *(char**)darr_at(&split_statement, 0);
+		if (ft_strequ(type, "map_Ka"))
+			mtl->fmap_ka = tex_path;
+		else if (ft_strequ(type, "map_Kd"))
+			mtl->fmap_kd = tex_path;
+		else if (ft_strequ(type, "map_Ks"))
+			mtl->fmap_ks = tex_path;
+		else if (ft_strequ(type, "map_bump") || ft_strequ(type, "bump"))
+			mtl->fmap_bump = tex_path;
+	}
+	darr_clear(&split_statement, (void (*)(void *))&ft_memdel);
 }
 
 static void	create_mtl(t_obj *obj, char *name)
@@ -41,7 +57,6 @@ static void	create_mtl(t_obj *obj, char *name)
 
 	mtl = (t_mtl*)darr_create_last(&obj->mtls);
 	mtl->name = ft_strdup(name);
-	ft_printf( "newmtl %s\n", name );
 }
 
 void	parse_mtl(t_obj *obj, char *root, char *filename)
@@ -63,13 +78,12 @@ void	parse_mtl(t_obj *obj, char *root, char *filename)
 					|| ft_strnequ(line, "Ks", 2) || ft_strnequ(line, "Ns", 2))
 				parse_color_statement((t_mtl*)darr_last(&obj->mtls), line);
 			else if (ft_strnequ(line, "map", 3) || ft_strnequ(line, "bump", 4))
-				parse_texture_statement((t_mtl*)darr_last(&obj->mtls), line);
+				parse_texture_statement(
+					(t_mtl*)darr_last(&obj->mtls), line, root
+				);
 			ft_memdel((void**)&line);
 		}
 		free(root);
 	}
-	else
-		ft_dprintf(2, "  -%s |%s|\n", strerror(errno), path);
-	
 	free(path);
 }
