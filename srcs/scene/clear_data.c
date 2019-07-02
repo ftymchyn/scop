@@ -8,6 +8,18 @@ static void	clear_face(void *data)
 	darr_clear(darr, NULL);
 }
 
+static void	clear_mtl(void *data)
+{
+	t_mtl	*mtl;
+
+	mtl = (t_mtl*)data;
+	ft_memdel((void**)&mtl->name);
+	ft_memdel((void**)&mtl->fmap_ka);
+	ft_memdel((void**)&mtl->fmap_kd);
+	ft_memdel((void**)&mtl->fmap_ks);
+	ft_memdel((void**)&mtl->fmap_bump);
+}
+
 void		clear_model(t_model *model)
 {
 	t_mesh		*mesh;
@@ -58,7 +70,7 @@ void		clear_obj(t_obj *obj)
 			}
 			darr_clear(&object->groups, NULL);
 		}
-		darr_clear(&obj->mtls, NULL);
+		darr_clear(&obj->mtls, &clear_mtl);
 		darr_clear(&obj->objects, NULL);
 		darr_clear(&obj->v, NULL);
 		darr_clear(&obj->vn, NULL);
