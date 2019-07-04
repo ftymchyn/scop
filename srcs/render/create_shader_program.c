@@ -68,23 +68,25 @@ GLuint	create_shader_program(const char *filename)
 	GLuint	frag;
 
 	result = 0;
-	source = read_file(filename);
-	vert = create_shader(GL_VERTEX_SHADER, ft_strstr(source, "//VERTEX"));
-	frag = create_shader(GL_FRAGMENT_SHADER, ft_strstr(source, "//FRAGMENT"));
-	if (vert && frag)
+	if ((source = read_file(filename)))
 	{
-		result = glCreateProgram();
-		glAttachShader(result, vert);
-		glAttachShader(result, frag);
-		glLinkProgram(result);
-		if (print_link_error(result))
+		vert = create_shader(GL_VERTEX_SHADER, ft_strstr(source, "//VERTEX"));
+		frag = create_shader(GL_FRAGMENT_SHADER, ft_strstr(source, "//FRAGMENT"));
+		if (vert && frag)
 		{
-			glDeleteProgram(result);
-			result = 0;
+			result = glCreateProgram();
+			glAttachShader(result, vert);
+			glAttachShader(result, frag);
+			glLinkProgram(result);
+			if (print_link_error(result))
+			{
+				glDeleteProgram(result);
+				result = 0;
+			}
+			glDeleteShader(vert);
+			glDeleteShader(frag);
 		}
-		glDeleteShader(vert);
-		glDeleteShader(frag);
+		free(source);
 	}
-	free(source);
 	return (result);
 }
