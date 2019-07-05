@@ -45,7 +45,7 @@ static void	parse_texture_statement(t_mtl *mtl, char *statement, char *root)
 			mtl->fmap_kd = tex_path;
 		else if (ft_strequ(type, "map_Ks"))
 			mtl->fmap_ks = tex_path;
-		else if (ft_strequ(type, "map_bump") || ft_strequ(type, "bump"))
+		else if (ft_strequ(type, "map_Bump") || ft_strequ(type, "bump"))
 			mtl->fmap_bump = tex_path;
 	}
 	darr_clear(&split_statement, (void (*)(void *))&ft_memdel);
@@ -81,9 +81,9 @@ void	parse_mtl(t_obj *obj, char *root, char *filename)
 				parse_texture_statement(
 					(t_mtl*)darr_last(&obj->mtls), line, root
 				);
-			ft_memdel((void**)&line);
+			ft_strdel(&line);
 		}
-		free(root);
+		ft_strdel(&root);
 	}
-	free(path);
+	ft_strdel(&path);
 }
