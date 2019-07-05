@@ -12,7 +12,7 @@ static void	init_scene(t_scop *s)
 	s->scene.camera.m_ortho = m_ortho(
 		s->scene.camera.w, s->scene.camera.h, 1.0f, 100.0f
 	);
-	s->scene.light.dir = norm3f((t_float3){0.8f, -0.8f, -1.0f});
+	s->scene.light.dir = norm3f((t_float3){0.6f, -0.8f, -1.0f});
 	s->scene.light.ka.rgb = 0.1f;
 	s->scene.light.kd.rgb = 0.9f;
 	s->scene.model_shader = create_shader_program("srcs/shaders/model.glsl");
