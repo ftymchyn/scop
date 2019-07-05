@@ -70,23 +70,38 @@ static void		fill_mesh(t_mesh *mesh, t_darr *verts, t_obj *buffers)
 	}
 }
 
-static void		fill_model(t_model *m, t_object *o, t_darr *mtls)
+static t_mesh	*get_material_mesh(t_model *m, t_darr *mtls, const char *mtl_id)
 {
-	t_group	*group;
-	t_mesh	*mesh;
-	int		i;
-	int		k;
+	t_mesh	*result;
 
 	(void)mtls;
-	mesh = (t_mesh*)darr_last(&m->meshes);
-	i = -1;
-	while (++i < o->groups.size)
-	{
-		group = (t_group*)darr_at(&o->groups, i);
+	(void)mtl_id;
+	result = (t_mesh*)darr_last(&m->meshes);
+	return (result);
+}
 
-		k = -1;
-		while (++k < group->faces.size)
-			fill_mesh(mesh, (t_darr*)darr_at(&group->faces, k), o->data);
+static void		fill_model_from_obj(t_model *m, t_obj *o)
+{
+	t_object	*obj;
+	t_group		*group;
+	t_mesh		*mesh;
+	int			i[3];
+
+	init_mesh((t_mesh*)darr_create_last(&m->meshes));
+	i[0] = -1;
+	while (++i[0] < o->objects.size)
+	{
+		obj = (t_object*)darr_at(&o->objects, i[0]);
+		mesh = (t_mesh*)darr_last(&m->meshes);
+		i[1] = -1;
+		while (++i[1] < obj->groups.size)
+		{
+			group = (t_group*)darr_at(&obj->groups, i[1]);
+			mesh = get_material_mesh(m, &o->mtls, group->name);
+			i[2] = -1;
+			while (++i[2] < group->faces.size)
+				fill_mesh(mesh, (t_darr*)darr_at(&group->faces, i[2]), o);
+		}
 	}
 }
 
@@ -96,11 +111,9 @@ t_model			load_model(const char *filename)
 	t_obj	o;
 	char	*root;
 	int		fd;
-	int		i;
 
 	init_model(&result);
 	init_obj(&o);
-	init_mesh((t_mesh*)darr_create_last(&result.meshes));
 	if ((fd = open(filename, O_RDONLY)) != -1)
 	{
 		ft_printf("\nLoad model from file \"%s\" :\n");
@@ -108,9 +121,7 @@ t_model			load_model(const char *filename)
 		parse_obj_fd(fd, &o, root);
 		o.mid_vec = (o.min_p + o.max_p) * 0.5f;
 		result.scale /= sqrtf(dot3f(o.min_p - o.max_p, o.min_p - o.max_p));
-		i = -1;
-		while (++i < o.objects.size)
-			fill_model(&result, darr_at(&o.objects, i), &o.mtls);
+		fill_model_from_obj(&result, &o);
 		generate_buffers((t_mesh*)darr_last(&result.meshes));
 		free(root);
 	}
