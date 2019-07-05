@@ -30,9 +30,9 @@ static void	parse_color_statement(t_mtl *mtl, char *statement)
 
 static void	parse_texture_statement(t_mtl *mtl, char *statement, char *root)
 {
-	char		*type;
-	char		*tex_path;
-	t_darr		split_statement;
+	char	*type;
+	char	*tex_path;
+	t_darr	split_statement;
 
 	split_statement = ft_strsplit_vec(statement, ' ');
 	if (split_statement.size > 1)
@@ -47,6 +47,8 @@ static void	parse_texture_statement(t_mtl *mtl, char *statement, char *root)
 			mtl->fmap_ks = tex_path;
 		else if (ft_strequ(type, "map_Bump") || ft_strequ(type, "bump"))
 			mtl->fmap_bump = tex_path;
+		else
+			ft_strdel(&tex_path);
 	}
 	darr_clear(&split_statement, (void (*)(void *))&ft_memdel);
 }
