@@ -38,3 +38,14 @@ void	init_model(t_model *model)
 		model->scale = 1.0f;
 	}
 }
+
+void	init_material(t_material *mtl)
+{
+	if (mtl)
+	{
+		ft_bzero(mtl, sizeof(t_material));
+		mtl->id = DEFAULT_MTL_ID;
+		mtl->ka.xyz = 1.0f;
+		mtl->kd.xyz = 0.8f;
+	}
+}

@@ -70,13 +70,40 @@ static void		fill_mesh(t_mesh *mesh, t_darr *verts, t_obj *buffers)
 	}
 }
 
+static void		fill_material(t_material *mat, t_mtl *mtl)
+{
+	init_material(mat);
+	mat->id = ft_strdup(mtl->name);
+	mat->ka = mtl->ka;
+	mat->kd = mtl->kd;
+	mat->ks = mtl->ks;
+	mat->ns = mtl->ns;
+}
+
 static t_mesh	*get_material_mesh(t_model *m, t_darr *mtls, const char *mtl_id)
 {
-	t_mesh	*result;
+	t_mesh		*result;
+	int			i;
 
-	(void)mtls;
-	(void)mtl_id;
-	result = (t_mesh*)darr_last(&m->meshes);
+	result = NULL;
+	i = -1;
+	while (!result && ++i < m->materials.size)
+	{
+		if (ft_strequ(((t_material*)darr_at(&m->materials, i))->id, mtl_id))
+			result = (t_mesh*)darr_at(&m->meshes, i);
+	}
+	i = -1;
+	while (!result && ++i < mtls->size)
+	{
+		if (ft_strequ(((t_mtl*)darr_at(mtls, i))->name, mtl_id))
+		{
+			fill_material(darr_create_last(&m->materials), darr_at(mtls, i));
+			result = (t_mesh*)darr_create_last(&m->meshes);
+			init_mesh(result);
+		}
+	}
+	if (result == NULL)
+		result = (t_mesh*)darr_at(&m->meshes, 0);
 	return (result);
 }
 
@@ -87,12 +114,12 @@ static void		fill_model_from_obj(t_model *m, t_obj *o)
 	t_mesh		*mesh;
 	int			i[3];
 
-	init_mesh((t_mesh*)darr_create_last(&m->meshes));
+	init_material(darr_create_last(&m->materials));
+	init_mesh(darr_create_last(&m->meshes));
 	i[0] = -1;
 	while (++i[0] < o->objects.size)
 	{
 		obj = (t_object*)darr_at(&o->objects, i[0]);
-		mesh = (t_mesh*)darr_last(&m->meshes);
 		i[1] = -1;
 		while (++i[1] < obj->groups.size)
 		{
@@ -100,7 +127,9 @@ static void		fill_model_from_obj(t_model *m, t_obj *o)
 			mesh = get_material_mesh(m, &o->mtls, group->name);
 			i[2] = -1;
 			while (++i[2] < group->faces.size)
-				fill_mesh(mesh, (t_darr*)darr_at(&group->faces, i[2]), o);
+			{
+				fill_mesh(mesh, darr_at(&group->faces, i[2]), o);
+			}
 		}
 	}
 }
@@ -116,13 +145,12 @@ t_model			load_model(const char *filename)
 	init_obj(&o);
 	if ((fd = open(filename, O_RDONLY)) != -1)
 	{
-		ft_printf("\nLoad model from file \"%s\" :\n");
 		root = ft_strsub(filename, 0, ft_strrchr(filename, '/') - filename + 1);
 		parse_obj_fd(fd, &o, root);
 		o.mid_vec = (o.min_p + o.max_p) * 0.5f;
 		result.scale /= sqrtf(dot3f(o.min_p - o.max_p, o.min_p - o.max_p));
 		fill_model_from_obj(&result, &o);
-		generate_buffers((t_mesh*)darr_last(&result.meshes));
+		darr_foreach(&result.meshes, (void (*)(void*))&generate_buffers);
 		free(root);
 	}
 	close(fd);
