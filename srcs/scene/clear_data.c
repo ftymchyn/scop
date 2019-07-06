@@ -43,7 +43,8 @@ void		clear_model(t_model *model)
 	while (++i < model->materials.size)
 	{
 		material = (t_material*)darr_at(&model->materials, i);
-		ft_memdel((void**)&material->id);
+		if (!ft_strequ(material->id, DEFAULT_MTL_ID))
+			ft_strdel((char**)&material->id);
 	}
 	darr_clear(&model->materials, NULL);
 }
