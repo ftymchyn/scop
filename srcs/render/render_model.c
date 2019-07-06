@@ -1,6 +1,6 @@
 #include "scop.h"
 
-static void	update_model_shader(t_scop *s)
+static void	update_shared_uniforms(t_scop *s)
 {
 	t_mat4	model;
 	t_mat4	proj;
@@ -28,17 +28,32 @@ static void	update_model_shader(t_scop *s)
 		s->scene.light.kd.x, s->scene.light.kd.y, s->scene.light.kd.z, 1.0f);
 }
 
+static void	update_material_uniforms(t_scop *s, t_material *m)
+{
+	GLint	u_location;
+
+	u_location = glGetUniformLocation(s->scene.model_shader, "u_mtl.ka");
+	glUniform4f(u_location, m->ka.x, m->ka.y, m->ka.z, 1.0f);
+	u_location = glGetUniformLocation(s->scene.model_shader, "u_mtl.kd");
+	glUniform4f(u_location, m->kd.x, m->kd.y, m->kd.z, 1.0f);
+	u_location = glGetUniformLocation(s->scene.model_shader, "u_mtl.ks");
+	glUniform4f(u_location, m->ks.x, m->ks.y, m->ks.z, 1.0f);
+	u_location = glGetUniformLocation(s->scene.model_shader, "u_mtl.ns");
+	glUniform1f(u_location, m->ns);
+}
+
 void		render_model(t_scop *s)
 {
 	t_mesh	*mesh;
 	int		i;
 
 	GL_CALL(glUseProgram(s->scene.model_shader));
-	update_model_shader(s);
+	update_shared_uniforms(s);
 	i = 0;
 	while (i < s->scene.model.meshes.size)
 	{
 		mesh = (t_mesh*)darr_at(&s->scene.model.meshes, i);
+		update_material_uniforms(s, darr_at(&s->scene.model.materials, i));
 		glBindVertexArray(mesh->vao);
 		glDrawArrays(GL_TRIANGLES, 0, mesh->v.size);
 		glBindVertexArray(0);
