@@ -20,7 +20,7 @@ static t_group	*create_group(t_obj *obj, char *name)
 
 	if (obj->objects.size == 0)
 		create_object(obj, NULL);
-	name = (name ? name : ft_strdup("default"));
+	name = (name ? name : ft_strdup(DEFAULT_MTL_ID));
 	ft_printf("    -parsing material group \"%s\"\n", name);
 	object = (t_object*)darr_last(&obj->objects);
 	result = (t_group*)darr_create_last(&object->groups);

@@ -10,6 +10,7 @@
 
 # define ERROR_LOG_SIZE 1024
 # define GL_CALL(gl_func) gl_skip_errors();gl_func;gl_check_errors(__FILE__, __LINE__)
+# define DEFAULT_MTL_ID ("default")
 
 void		create_context(t_scop *scop, int width, int height);
 void		destroy_context(t_scop *scop);
@@ -32,6 +33,7 @@ void		render_model(t_scop *s);
 void		render_skybox(t_scop *s);
 
 t_model		load_model(const char *filename);
+void		init_material(t_material *mtl);
 void		init_model(t_model *model);
 void		clear_model(t_model *model);
 void		init_mesh(t_mesh *mesh);
