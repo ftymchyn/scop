@@ -17,8 +17,6 @@ uniform struct
 uniform struct
 {
 	vec3  dir;
-	vec4  ka;
-	vec4  kd;
 }		  u_light;
 
 uniform struct
@@ -34,8 +32,8 @@ void main()
 	vec3 l = normalize( u_light.dir * -1.0 );
 	vec3 n = normalize( transpose( inverse( mat3( u_mvp.model ) ) ) * a_normal );
 
-	vec4 ambient = u_light.ka * u_mtl.ka;
-	vec4 diffuse = u_light.kd * u_mtl.kd * max( 0.0, dot( n, l ) );
+	vec4 ambient = u_mtl.ka;
+	vec4 diffuse = u_mtl.kd * max( 0.0, dot( n, l ) );
 
 	frag_color = ambient + diffuse;
 	gl_Position = u_mvp.proj * u_mvp.view * u_mvp.model * vec4( a_position, 1.0 );

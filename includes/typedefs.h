@@ -116,8 +116,6 @@ typedef struct		s_skybox
 typedef struct		s_light
 {
 	t_float3		dir;
-	t_float3		ka;
-	t_float3		kd;
 }					t_light;
 
 typedef struct		s_scene
