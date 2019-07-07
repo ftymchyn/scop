@@ -61,10 +61,18 @@ static void	create_mtl(t_obj *obj, char *name)
 	mtl->name = ft_strdup(name);
 }
 
-void	parse_mtl(t_obj *obj, char *root, char *filename)
+static char	*skip_extra_wspaces(char *str)
+{
+	while (IS_WHITESPACES(*str))
+		str++;
+	return (str);
+}
+
+void		parse_mtl(t_obj *obj, char *root, char *filename)
 {
 	char	*path;
 	char	*line;
+	char	*tmp;
 	int		fd;
 
 	path = ft_strjoin(root, filename);
@@ -74,15 +82,15 @@ void	parse_mtl(t_obj *obj, char *root, char *filename)
 		root = ft_strsub(path, 0, ft_strrchr(path, '/') - path + 1);
 		while (get_next_line(fd, &line) > 0)
 		{
-			if (ft_strnequ(line, "newmtl ", 7))
-				create_mtl(obj, line + 7);
-			else if (ft_strnequ(line, "Ka", 2) || ft_strnequ(line, "Kd", 2)
-					|| ft_strnequ(line, "Ks", 2) || ft_strnequ(line, "Ns", 2))
-				parse_color_statement((t_mtl*)darr_last(&obj->mtls), line);
-			else if (ft_strnequ(line, "map", 3) || ft_strnequ(line, "bump", 4))
+			tmp = skip_extra_wspaces(line);
+			if (ft_strnequ(tmp, "newmtl ", 7))
+				create_mtl(obj, tmp + 7);
+			else if (ft_strnequ(tmp, "Ka", 2) || ft_strnequ(tmp, "Kd", 2)
+					|| ft_strnequ(tmp, "Ks", 2) || ft_strnequ(tmp, "Ns", 2))
+				parse_color_statement((t_mtl*)darr_last(&obj->mtls), tmp);
+			else if (ft_strnequ(tmp, "map", 3) || ft_strnequ(tmp, "bump", 4))
 				parse_texture_statement(
-					(t_mtl*)darr_last(&obj->mtls), line, root
-				);
+					(t_mtl*)darr_last(&obj->mtls), tmp, root);
 			ft_strdel(&line);
 		}
 		ft_strdel(&root);
