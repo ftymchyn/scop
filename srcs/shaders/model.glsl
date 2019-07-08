@@ -27,6 +27,16 @@ uniform struct
 	float ns;
 }		  u_mtl;
 
+void toneMapping( inout vec4 color )
+{
+	color.rgb = color.rgb / ( color.rgb + vec3( 1.0 ) );
+}
+
+void gammaCorrection( inout vec4 color )
+{
+	color.xyz = pow( color.xyz, vec3( 1.0 / 2.2 ) );
+}
+
 void main()
 {
 	vec3 l = normalize( u_light.dir * -1.0 );
@@ -36,6 +46,10 @@ void main()
 	vec4 diffuse = u_mtl.kd * max( 0.0, dot( n, l ) );
 
 	frag_color = ambient + diffuse;
+
+	toneMapping( frag_color );
+	gammaCorrection( frag_color );
+
 	gl_Position = u_mvp.proj * u_mvp.view * u_mvp.model * vec4( a_position, 1.0 );
 }
 
