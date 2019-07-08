@@ -45,7 +45,7 @@ void	init_material(t_material *mtl)
 	{
 		ft_bzero(mtl, sizeof(t_material));
 		mtl->id = DEFAULT_MTL_ID;
-		mtl->ka.xyz = 0.2f;
-		mtl->kd.xyz = 0.6f;
+		mtl->ka.xyz = 0.1f;
+		mtl->kd.xyz = 0.9f;
 	}
 }
